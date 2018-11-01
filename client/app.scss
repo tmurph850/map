@@ -1,0 +1,382 @@
+/********************************************
+*                                           *
+*                   Gloabl                  *
+*                                           *
+*                                           *
+********************************************/
+$bg-main: #2a2f3f;
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  min-height: 100%;
+  //background: #232734;
+  background: $bg-main;
+  //font-family: 'K2D', sans-serif;
+}
+
+.container-fluid {
+  height: 100%;
+  min-height: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  /*width: 100%;
+  max-width: 100%;
+  position: absolute;*/
+}
+
+.submit-container {
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 3%;
+
+  .submit-button {
+    color: #fff;
+    background: #28a745;
+    width: 50%;
+    height: 36px;
+    border-radius: 5px;
+    font-weight: 500;
+    border-color: #28a745;
+  }
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 999;
+  /* Sit on top */
+  padding-top: 100px;
+  /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+
+  /* Black w/ opacity */
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0px;
+    border: 1px solid $bg-main;
+    width: 740px;
+    height: 250px;
+    top: 22%;
+    display: block;
+
+    .modal-close {
+      color: #fff;
+      margin: 4px 0px 0px 8px;
+      font-size: 20px;
+      //display: block;
+    }
+
+    .modal-submit-container {
+      //margin-top: 80px;
+      margin: 0 auto;
+      width: 30%;
+      display: block;
+      text-align: center;
+
+      .modal-submit {
+        width: 80%;
+        display: block;
+        margin: 0 auto;
+        background: #28a745;
+        border-color: #28a745;
+        color: #fff;
+        border-radius: 5px;
+        height: 36px;
+      }
+    }
+
+    .row {
+      background: $bg-main;
+      height: 60px;
+      margin-left: 0px;
+      margin-right: 0px;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+
+      .modal-title {
+        margin: 0 auto;
+        font-family: 'Raleway', sans-serif;
+        margin-top: 14px;
+        color: white;
+        font-size: 20px;
+        text-shadow: 2px 2px 3px #000;
+        padding-right: 13.75px;
+      }
+    }
+
+    .modal-input {
+      border-radius: 5px;
+      width: 500px;
+      text-align: left !important;
+      font-size: 20px;
+    }
+
+    .modal-input-container {
+      padding: 60px 10px 30px 10px;
+    }
+
+    .list-options {
+      font-size: 22px !important;
+      padding: 0 0 0 0;
+      text-align: center !important;
+      margin: 0 auto;
+    }
+
+  }
+}
+
+/********************************************
+*                                           *
+*                   Gloabl                  *
+*                                           *
+*                                           *
+********************************************/
+
+/********************************************
+*                                           *
+*                   Nav                     *
+*                                           *
+*                                           *
+********************************************/
+.navbar {
+  .btn {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #000;
+  }
+
+  .the-logo {
+    width: 200px;
+  }
+}
+
+.navbar-brand:hover {
+  color: rgba(0, 0, 0, 0.54) !important;
+}
+
+.navbar::after {
+  bottom: -5px;
+  box-shadow: inset 0px 5px 8px -3px #fc572a;
+  content: "";
+  height: 5px;
+  left: 0px;
+  opacity: 1;
+  pointer-events: none;
+  position: absolute;
+  right: 0px;
+  width: 100%;
+  z-index: 2050;
+}
+
+.navbar-toggler-icon {
+  color: #000;
+}
+
+.bg-light {
+  background-color: #fff !important;
+}
+
+.nav-link {
+  color: black !important;
+}
+
+.nav-link:hover {
+  color: rgba(0, 0, 0, 0.54) !important;
+}
+
+.active {
+  color: #e9562d !important;
+}
+
+/********************************************
+*                                           *
+*                   Nav                     *
+*                                           *
+*                                           *
+********************************************/
+
+
+
+
+/********************************************
+*                                           *
+*            Applicationform                *
+*                                           *
+*                                           *
+********************************************/
+.application-form-container {
+  .form-header {
+    text-align: center;
+    margin: 0 auto;
+    font-size: 36px;
+    margin-top: 1.4%;
+    font-family: 'Raleway', sans-serif;
+    color: #fff;
+    text-shadow: 2px 2px 3px #000;
+  }
+
+  .blade-specific {
+    text-align: center;
+    margin: 0 auto;
+    font-size: 36px;
+    margin-top: 1.4%;
+    font-family: 'Raleway', sans-serif;
+    color: #fff;
+    text-shadow: 2px 2px 3px #000;
+  }
+
+  .select-application-group {
+    margin-top: 4%;
+
+    .form-control:focus {
+      box-shadow: none;
+      border-color: #e9562d;
+      background-color: #fff;
+      color: #000;
+    }
+  }
+
+  .form-control {
+    margin: 0 auto;
+    /*border-top: none;
+    border-left: none;
+    border-right: none;*/
+    background: #fff;
+    width: 75%;
+    color: #000;
+    border-color: #df532c;
+    border-radius: 20px;
+  }
+
+  .form-control:focus {
+    box-shadow: none;
+    border-color: #000;
+    background-color: #e9562d;
+    color: #fff;
+  }
+
+  .select-application {
+    width: 500px;
+    font-size: 22px;
+    margin: 0 auto;
+    height: 42px;
+    max-width: 75%;
+  }
+
+  .select-app-col {
+    margin: 0 auto;
+  }
+
+  .form-control[readonly] {
+    background-color: #fff !important;
+  }
+
+  .form-control[readonly]:focus {
+    background-color: #fff !important;
+    color: #000 !important;
+    border-color: #df532c;
+  }
+
+  .app-data-label {
+    font-family: 'Raleway', sans-serif;
+    margin: 0 auto;
+    font-size: 26px;
+    position: relative;
+    color: #fff;
+    text-shadow: 2px 2px 3px #000;
+  }
+
+  .form-group {
+    text-align: center;
+  }
+
+  .app-desc-col {
+    margin: 0 auto;
+  }
+
+  .first-row,
+  .second-row,
+  .third-row,
+  .fourth-row {
+    width: 75%;
+    margin: 0 auto;
+    margin-top: 2%;
+  }
+
+  .fifth-row {
+    @extend .first-row;
+    margin-top: 4%;
+    margin-bottom: 4%;
+  }
+
+  .sized-select {
+    width: 88%;
+    border-radius: 5px;
+  }
+
+  .sized-select:focus {
+    background: #e9562d !important;
+    color: #fff;
+    border-color: #000;
+  }
+
+  .sized-group {
+    text-align: center;
+  }
+
+  input {
+    text-align: center !important;
+    font-size: 22px;
+  }
+
+  .fas {
+    color: white;
+    cursor: pointer;
+  }
+
+  .fa-minus {
+    margin-left: 20px;
+  }
+
+  .add-remove-container {
+    text-align: center;
+  }
+
+  /*@media screen and (max-width: ){
+    
+  }*/
+
+}
+
+/********************************************
+*                                           *
+*            Applicationform                *
+*                                           *
+*                                           *
+********************************************/
+
+/*margin: 0;
+    height: 100%;
+    min-height: 100%;
+    background-color: #eee;
+    background-image: url(data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1…3Cpolygon fill='%232a2f3f' points='943 900 1210 900 971 687'/%3E%3C/svg%3E);
+    background-attachment: fixed;
+    background-size: cover;
+*/
