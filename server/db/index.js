@@ -8,10 +8,10 @@ const prodPassword = 'post1';
 
 const pool = new Pool({
   user: 'postgres',
-  host: devHost,
+  host: prodHost,
   port: 5432,
   database: theDB,
-  password: devPassword
+  password: prodPassword
 });
 
 module.exports = {
@@ -19,7 +19,7 @@ module.exports = {
     const start = Date.now();
     return pool.query(text, params, (err, res) => {
       const duration = Date.now() - start;
-      //console.log('executed query', { text, duration, rows: res.rowCount });
+      //console.log('executed query', { text, duration });
       callback(err, res);
     });
   },

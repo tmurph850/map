@@ -12,14 +12,16 @@ const getAssetNamesProdUrl = 'http://ec2-18-214-185-132.compute-1.amazonaws.com:
 const getBladesDevUrl = 'http://localhost:3000/getBlades';
 const getBladesProdUrl = 'http://ec2-18-214-185-132.compute-1.amazonaws.com:3000/getBlades';
 const getChassisDevUrl = 'http://localhost:3000/getChassis';
-const getChassisProudUrl = 'http://ec2-18-214-185-132.compute-1.amazonaws.com:3000/getChassis';
+const getChassisProdUrl = 'http://ec2-18-214-185-132.compute-1.amazonaws.com:3000/getChassis';
+const getAssetTypesDevUrl = 'http://ec2-18-214-185-132.compute-1.amazonaws.com:3000/getAssetTypes';
+const getAssetTypesProdUrl = 'http://ec2-18-214-185-132.compute-1.amazonaws.com:3000/getAssetTypes';
 
 
 export const getData = (requestType) => {
   let actionType;
   let correctUrl;
-  let env = "dev";
-  //let env = "prod";
+  //let env = "dev";
+  let env = "prod";
 
   switch (requestType) {
     case "get_app_names":
@@ -47,31 +49,31 @@ export const getData = (requestType) => {
 
     const requestAssetNames = axios({
       method: "get",
-      url: getAssetNamesDevUrl,
+      url: getAssetNamesProdUrl,
       responseType: "json",
     });
 
     const requestAssetTypes = axios({
       method: "get",
-      url: 'http://localhost:3000/getAssetTypes',
+      url: getAssetTypesProdUrl,
       responseType: "json",
     });
 
     const requestAppNames = axios({
       method: "get",
-      url: getAppNamesDevUrl,
+      url: getAppNamesProdUrl,
       responseType: "json",
     });
 
     const requestBlades = axios({
       method: "get",
-      url: getBladesDevUrl,
+      url: getBladesProdUrl,
       responseType: "json",
     });
 
     const requestChassis = axios({
       method: "get",
-      url: getChassisDevUrl,
+      url: getChassisProdUrl,
       responseType: "json",
     });
   

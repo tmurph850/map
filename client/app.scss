@@ -361,7 +361,10 @@ body {
 
   @media screen and (max-width: 768px){
     .form-control {
-      width: 100% !important;
+      width: 100%;
+    }
+    .sized-select {
+      width: 100%;
     }
   }
 
