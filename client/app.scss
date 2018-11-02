@@ -359,11 +359,14 @@ body {
     text-align: center;
   }
 
-  /*@media screen and (max-width: ){
-    
-  }*/
+  @media screen and (max-width: 768px){
+    .form-control {
+      width: 100% !important;
+    }
+  }
 
 }
+
 
 /********************************************
 *                                           *
