@@ -344,6 +344,8 @@ class AssetForm extends Component {
       return bladeData.chassis;
     } else if ( type === "slot" && bladeData !== undefined ) {
       return bladeData.chassis_slot_number;
+    } else if ( type === "parent" && bladeData !== undefined && bladeData.parent_asset_id !== undefined ) {
+      return bladeData.parent_asset_id;
     } else {
       return "";
     }
@@ -1624,6 +1626,22 @@ class AssetForm extends Component {
                     className="form-control inputdefault"
                     id="subnet"
                     value={this.getBladeInfo("slot")}
+                    onChange={this.dynamicOnChange}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="row fourth-row">
+            <div className="col-lg-6 col-md-6 col-xs-12 app-env-col" style={{margin: '0 auto'}}>
+              <div className="form-group">
+                <label className="app-data-label" htmlFor="subnet">Parent Asset Id:</label>
+                <div>
+                  <input
+                    className="form-control inputdefault"
+                    id="subnet"
+                    value={this.getBladeInfo("parent")}
                     onChange={this.dynamicOnChange}
                   />
                 </div>
