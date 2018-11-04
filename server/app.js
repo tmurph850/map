@@ -1,8 +1,7 @@
-const fs = require("fs");
+//const fs = require("fs");
 const bodyParser = require('body-parser');
 const express = require('express');
-const http = require('http');
-const assert = require('assert');
+
 const cors = require('cors');
 
 const app = express();

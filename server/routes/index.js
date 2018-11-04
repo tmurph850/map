@@ -10,6 +10,7 @@ const postAssetOrDep = require('./postAssetOrDep');
 const getAssetTypes = require('./getAssetTypes');
 const getBlades = require('./getBlades');
 const getChassis = require('./getChassis');
+const newLogin = require('./newLogin');
 
 module.exports = (app) => {
   app.get('/getAllApplicationNames', getAllApplicationNames);
@@ -24,4 +25,5 @@ module.exports = (app) => {
   app.post('/getCurrentDependencies', getCurrentDependencies);
   app.post('/postAppForm', postAppForm);
   app.post('/postAssetOrDep', postAssetOrDep);
+  app.post('/login', newLogin);
 };

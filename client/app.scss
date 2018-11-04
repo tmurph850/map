@@ -378,6 +378,81 @@ body {
 *                                           *
 ********************************************/
 
+/**
+  Signup Styles
+**/
+.signup-view {
+
+  .container-fluid {
+    min-height: 100%;
+    height:auto !important; /* cross-browser */
+    height: 100%; /* cross-browser */
+    background-color: rgb(235, 235, 236);
+  }
+
+  .header-div {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    top: 2rem;
+
+    h1 {
+      font-size: 2rem;
+    }
+
+  }
+
+  .form-control {
+    width: 60%;
+    display: block;
+    position: relative;
+    border: none;
+    border-bottom: 2px solid rgb(235, 235, 236);
+    border-radius: 0px;
+    margin-bottom: 26px;
+  }
+
+  .form-control:focus {
+    border: none;
+    border-bottom: 2px solid #007bff;
+    box-shadow: none;
+    border-radius: 0px;
+  }
+
+  .input-block {
+    margin: 0 auto;
+    top: 6.4rem;
+    height: 400px;
+    background-color: #fff;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  }
+
+  .form-group {
+    display: block;
+    position: relative;
+    top: 4rem;
+  }
+
+  input {
+    margin: 0 auto;
+    border-radius: 5px;
+  }
+
+  .button-container {
+    margin: 0 auto;
+    top: 5rem;
+  }
+
+  .small-header {
+    font-size: 1.5rem !important;
+  }
+
+}
+/**
+  End Signup Styles
+**/
+
 /*margin: 0;
     height: 100%;
     min-height: 100%;

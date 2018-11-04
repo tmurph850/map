@@ -21,7 +21,7 @@ class Nav extends Component {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item active">
-                <a className="nav-link" href="/login">login</a>
+                <a className="nav-link" href="/">login</a>
               </li>
               <li className="nav-item active">
                 <a className="nav-link" href="/signup">signup</a>
@@ -40,7 +40,7 @@ class Nav extends Component {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <a className="nav-link active" href="/">applications</a>
+                <a className="nav-link active" href="/application-form">applications</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/asset-form">assets</a>
