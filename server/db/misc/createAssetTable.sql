@@ -278,7 +278,7 @@ VALUES
      ),
      (
      'test_blade-1', 
-     7,
+     8,
      'hp',
      'blade1234', 
      1,

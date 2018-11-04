@@ -23,6 +23,7 @@ class AssetForm extends Component {
       assetSelected: false,
       originalAssetState: {},
       currentAsset: {},
+      currentAssetType: "",
       serverDependencies: [],
       applications: [],
       selectedApplications: [],
@@ -116,7 +117,7 @@ class AssetForm extends Component {
   setAssetTypes() {
     let assetTypes = this.props.assetNamesAndTypes[0][1].data;
     let assetKeys = Object.keys(assetTypes);
-    let assetTypeArray = [];
+    let assetTypeArray = [0];
     assetKeys.forEach(key => {
       assetTypeArray.push(assetTypes[key]);
     });
@@ -194,8 +195,11 @@ class AssetForm extends Component {
     let dataLength = this.props.assetData.length - 1;
     let currentAsset =  this.props.assetData[dataLength][0];
     let serverDependencies = currentAsset.server_dependencies;
+    let theIndex = currentAsset.asset_type;
+    let assetType = this.state.assetTypes[theIndex];
     this.setState({
       currentAsset: currentAsset,
+      currentAssetType: assetType,
       serverDependencies: serverDependencies,
       assetSelected: true
     });
@@ -325,7 +329,7 @@ class AssetForm extends Component {
   getBladeInfo(type) {
     let assetId = this.state.currentAsset.asset_id;
     let len = this.props.assetNamesAndTypes.length - 1;
-    let current = this.props.assetNamesAndTypes[len]["3"].data;
+    let current = this.props.assetNamesAndTypes[len][3].data;
     let bladeData;
 
     if ( current !== undefined ) {
@@ -347,7 +351,8 @@ class AssetForm extends Component {
 
   returnAssetType() {
     let assetTypes = this.state.assetTypeArray;
-    let assetType = assetTypes[this.state.currentAsset.asset_type];
+    let theIndex = this.state.currentAsset.asset_type;
+    let assetType = assetTypes[theIndex];
     return assetType;
   }
 
@@ -366,7 +371,7 @@ class AssetForm extends Component {
         </div>
       );
     }
-    if ( this.state.assetSelected === true && this.returnAssetType() !== "blade_server" && this.returnAssetType() !== "chassis" ) {
+    if ( this.state.assetSelected === true && this.state.currentAssetType !== "blade_server" && this.state.currentAssetType !== "chassis" ) {
       return (
         <div className="application-form-container">
           <header>
@@ -422,7 +427,7 @@ class AssetForm extends Component {
                 <div>
                   <ListOptions
                     data={this.state.assetTypeArray}
-                    defaultSelected={this.returnAssetType()}
+                    defaultSelected={this.state.currentAssetType}
                   />
                 </div>
               </div>
@@ -735,7 +740,7 @@ class AssetForm extends Component {
                   <input
                     className="form-control inputdefault"
                     id="domain"
-                    value={this.state.currentAsset.domain}
+                    value={this.state.currentAsset.domain_name}
                     onChange={this.dynamicOnChange}
                   />
                 </div>
@@ -1032,7 +1037,7 @@ class AssetForm extends Component {
         </div>
       );
     }
-    if ( this.state.assetSelected === true && this.returnAssetType() === "blade_server" ) {
+    if ( this.state.assetSelected === true && this.state.currentAssetType === "blade_server" ) {
       return (
         <div className="application-form-container">
           <header>
@@ -1087,7 +1092,7 @@ class AssetForm extends Component {
                 <label className="app-data-label" htmlFor="asset_type">Asset Type:</label>
                 <div>
                   <ListOptions
-                    defaultSelected={this.returnAssetType()}
+                    defaultSelected={this.state.currentAssetType}
                     data={this.state.assetTypeArray}
                   />
                 </div>
@@ -1403,7 +1408,7 @@ class AssetForm extends Component {
                   <input
                     className="form-control inputdefault"
                     id="domain"
-                    value={this.state.currentAsset.domain}
+                    value={this.state.currentAsset.domain_name}
                     onChange={this.dynamicOnChange}
                   />
                 </div>
@@ -1605,7 +1610,7 @@ class AssetForm extends Component {
                 <div>
                   <ListOptions
                     data={this.state.chassis}
-                    defaultSelected={this.returnAssetType()}
+                    defaultSelected={this.state.currentAssetType}
                   />
                 </div>
               </div>
