@@ -24,8 +24,8 @@ const postAssetOrDepProdUrl = 'http://ec2-18-214-185-132.compute-1.amazonaws.com
 export const postData = (postData, postType) => {
   let actionType;
   let correctUrl;
-  let env = "dev";
-  //let env = "prod";
+  //let env = "dev";
+  let env = "prod";
 
   switch (postType) {
     case "get_application_data":
