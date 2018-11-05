@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import uuidv1 from 'uuid';
 
 const SizedSelectField = (props) => {
 
@@ -7,7 +8,7 @@ const SizedSelectField = (props) => {
 
   if ( props.listData[0] !== undefined ) {
       listOptions = props.listData[0].map((app) =>
-      <option value ="" key={app}>{app}</option>
+      <option value ="" key={uuidv1()}>{app}</option>
     );
   } else {
     listOptions = [];

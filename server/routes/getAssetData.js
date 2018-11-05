@@ -1,9 +1,9 @@
 const db = require('../db/index');
 
 const getAssetData = (req, res) => {
-  let assetName = req.body.postData;
-  const text = `SELECT * FROM asset_table WHERE LOWER(asset_name) = LOWER($1)`;
-  const values = [assetName];
+  let assetId = req.body.postData;
+  const text = `SELECT * FROM asset_table WHERE asset_id = $1`;
+  const values = [assetId];
 
   db.query(text, values, (err, response) => {
     if (err) {

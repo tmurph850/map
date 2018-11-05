@@ -41,7 +41,8 @@ CREATE TABLE asset_table (
   server_dependencies text[],
   notes varchar,
   is_chassis boolean,
-  is_blade boolean
+  is_blade boolean,
+  time_stamp varchar
 );
 
 COPY asset_table FROM 'C:\Users\tmurp\Programming\databases\Asset_Table.csv'

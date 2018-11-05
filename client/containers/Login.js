@@ -92,7 +92,7 @@ class Login extends Component {
                 <input
                   className="form-control inputdefault"
                   placeholder="Password"
-                  type="text"
+                  type="password"
                   id="password-input"
                   onChange={this.handlePasswordInput}
                   value={this.state.password}

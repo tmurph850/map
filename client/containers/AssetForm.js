@@ -9,6 +9,7 @@ import SelectApplication from '../components/ApplicationForm/SelectApplication';
 import { getData } from '../actions/getData';
 import { postData } from '../actions/postData';
 import ListOptions from '../components/ListOptions';
+import emptyAsset from '../common/assetObj';
 
 class AssetForm extends Component {
   constructor(props) {
@@ -50,7 +51,8 @@ class AssetForm extends Component {
         fireWallModalDisplay: "none"
       },
       userAuthCurrent: this.props.userAuth.length - 1,
-      sessionAuth: sessionStorage.getItem('isUserAuth')
+      sessionAuth: sessionStorage.getItem('isUserAuth'),
+      isNewForm: false
     };
 
     this.assetOnClick = this.assetOnClick.bind(this);
@@ -77,7 +79,7 @@ class AssetForm extends Component {
     }
 
     if ( prevProps.assetData.length !== this.props.assetData.length ) {
-      this.setCurrentAsset();
+      this.setCurrentAsset("selected");
       this.setOriginalState();
     }
   }
@@ -193,18 +195,28 @@ class AssetForm extends Component {
     });
   }
 
-  setCurrentAsset() {
-    let dataLength = this.props.assetData.length - 1;
-    let currentAsset =  this.props.assetData[dataLength][0];
-    let serverDependencies = currentAsset.server_dependencies;
-    let theIndex = currentAsset.asset_type;
-    let assetType = this.state.assetTypes[theIndex];
-    this.setState({
-      currentAsset: currentAsset,
-      currentAssetType: assetType,
-      serverDependencies: serverDependencies,
-      assetSelected: true
-    });
+  setCurrentAsset(setType) {
+    if ( setType === "selected" ) {
+      let dataLength = this.props.assetData.length - 1;
+      let currentAsset =  this.props.assetData[dataLength][0];
+      let serverDependencies = currentAsset.server_dependencies;
+      let theIndex = currentAsset.asset_type;
+      let assetType = this.state.assetTypes[theIndex];
+      this.setState({
+        currentAsset: currentAsset,
+        currentAssetType: assetType,
+        serverDependencies: serverDependencies,
+        assetSelected: true
+      });
+    } else {
+      this.setState({
+        currentAsset: emptyAsset,
+        currentAssetType: 1,
+        isNewForm: true,
+        serverDependencies: []
+      });
+    }
+    
   }
 
   setOriginalState() {
@@ -216,8 +228,15 @@ class AssetForm extends Component {
 
   assetOnClick(e) {
     let assetName = e.target.selectedOptions[0].innerText;
+    let len = this.props.assetNamesAndTypes.length - 1;
+    let assetId;
+    this.props.assetNamesAndTypes[len][0].data.some((asset) => {
+      if ( assetName === asset.asset_name ) {
+        assetId = asset.asset_id;
+      }
+    });
     if ( assetName !== "Select an Asset" ) {
-      this.props.postData(assetName, "get_asset_data");
+      this.props.postData(assetId, "get_asset_data");
     } else {
       this.setState({
         assetSelected: false
@@ -1760,7 +1779,673 @@ class AssetForm extends Component {
             />            
           </div>
         );
-      }  
+      }
+      if ( this.state.assetSelected === true && this.state.currentAssetType === "chassis" ) {
+        return (
+          <div className="application-form-container">
+            <header>
+              <h1 className="form-header">Asset Data Form</h1>
+            </header>
+  
+            <SelectApplication
+              appNames={this.state.assetNames}
+              appOnClick={this.assetOnClick}
+              placeHolder="Select an Asset"
+            />
+  
+            <div className="row first-row">
+  
+              <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_id">Asset ID:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="asset_id"
+                      readOnly
+                      value={this.state.currentAsset.asset_id}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+  
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_name">Asset Name:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="asset_name"
+                      value={this.state.currentAsset.asset_name}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+  
+            </div>
+            <div className="row second-row">
+              <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_type">Asset Type:</label>
+                  <div>
+                    <ListOptions
+                      data={this.state.assetTypeArray}
+                      defaultSelected={this.state.currentAssetType}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+  
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_make">Asset Make:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="asset_make"
+                      value={this.state.currentAsset.asset_make}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+            </div>
+            <div className="row third-row">
+  
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_model">Asset Model:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="asset_model"
+                      value={this.state.currentAsset.asset_model}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_environment">Asset Environment:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="asset_environment"
+                      value={this.state.currentAsset.asset_environment}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+  
+            </div>
+            <div className="row third-row">
+  
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_function">Asset Function:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="asset_function"
+                      value={this.state.currentAsset.asset_function}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="serial_number">Serial Number:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="serial_number"
+                      value={this.state.currentAsset.serial_number}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+  
+            </div>
+  
+            <div className="row third-row">
+  
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="clustered">Clustered:</label>
+                  <div>
+                    <ListOptions
+                      defaultSelected={this.setClusteredValue()}
+                      data={["Yes", "No"]}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="data_center">Data Center:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="data_center"
+                      value={this.state.currentAsset.data_center}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+  
+            </div>
+          
+            <div className="row third-row">
+  
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="move_group">Move Group:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="move_group"
+                      value={this.state.currentAsset.move_group}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="os">OS:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="os"
+                      value={this.state.currentAsset.os}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+  
+            </div>
+  
+            <div className="row third-row">
+  
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="cpu">CPU:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="cpu"
+                      value={this.state.currentAsset.cpu}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="ram">RAM:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="ram"
+                      value={this.state.currentAsset.ram}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+  
+            </div>
+  
+  
+            <div className="row third-row">
+  
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="disk_size">Disk Size:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="disk_size"
+                      value={this.state.currentAsset.disk_size}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="ip_address">IP Address:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="ip_address"
+                      value={this.state.currentAsset.ip_address}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+  
+            </div>
+  
+  
+            <div className="row third-row">
+  
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="all_ips">All IP's:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="all_ips"
+                      value={this.state.currentAsset.all_ips}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="subnet">Subnet:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.state.currentAsset.subnet}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+  
+            </div>
+  
+  
+            <div className="row third-row">
+  
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="gateway">Gateway:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="gateway"
+                      value={this.state.currentAsset.gateway}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="vlan">VLAN:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="vlan"
+                      value={this.state.currentAsset.vlan}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+  
+            </div>
+  
+            <div className="row third-row">
+  
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="domain">Domain:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="domain"
+                      value={this.state.currentAsset.domain_name}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="db_dependency">DB Dependency:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="db_dependency"
+                      value={this.state.currentAsset.db_dependency}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+  
+            </div>
+  
+            <div className="row third-row">
+  
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="load_balanced">Load Balanced:</label>
+                  <div>
+                    <ListOptions
+                      defaultSelected={this.setLoadBalancedValue()}
+                      data={["Yes", "No"]}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="vip_requirements">VIP:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="vip_requirements"
+                      value={this.state.currentAsset.vip_requirements}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+  
+            </div>
+  
+            <div className="row third-row">
+  
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="dmz">DMZ:</label>
+                  <div>
+                    <ListOptions
+                      defaultSelected={this.setDMZValue()}
+                      data={["Yes", "No"]}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12">
+                <SizedSelectField
+                  dynamicClass="sized-select"
+                  labelText="Storage Dependency:"
+                  selectID="storage_dependencies"
+                  selectSize="8"
+                  listData={[this.state.currentAsset.storage_dependencies]}
+                  openOnClick={this.openOnClick}
+                />
+                <div className="add-remove-container">
+                  <i className="fas fa-plus" id="storageDependenciesModalDisplay" onClick={this.openModalOnClick}/>
+                  <i className="fas fa-minus" />
+                </div>
+              </div>
+  
+            </div>
+  
+            <div className="row fourth-row">
+  
+             <div className="col-lg-6 col-md-6 col-xs-12">
+                <SizedSelectField
+                  dynamicClass="sized-select"
+                  labelText="DB Asset Dependency:"
+                  selectID="db_asset_dependencies"
+                  selectSize="8"
+                  listData={[this.state.currentAsset.db_asset_dependencies]}
+                  openOnClick={this.openOnClick}
+                />
+                <div className="add-remove-container">
+                  <i className="fas fa-plus" id="dbAssetDependModalDisplay" onClick={this.openModalOnClick}/>
+                  <i className="fas fa-minus" />
+                </div>
+              </div>
+             <div className="col-lg-6 col-md-6 col-xs-12">
+                <SizedSelectField
+                  dynamicClass="sized-select"
+                  labelText="Network Dependency:"
+                  selectID="network_dependencies"
+                  selectSize="8"
+                  listData={[this.state.currentAsset.network_dependencies]}
+                  openOnClick={this.openOnClick}
+                />
+                <div className="add-remove-container">
+                  <i className="fas fa-plus" id="networkDependModalDisplay" onClick={this.openModalOnClick}/>
+                  <i className="fas fa-minus" />
+                </div>
+              </div>
+  
+            </div>
+  
+            <div className="row fourth-row">
+  
+             <div className="col-lg-6 col-md-6 col-xs-12">
+                <SizedSelectField
+                  dynamicClass="sized-select"
+                  labelText="Fileshare Dependency:"
+                  selectID="fileshare_dependencies"
+                  selectSize="8"
+                  listData={[this.state.currentAsset.fileshare_dependencies]}
+                  openOnClick={this.openOnClick}
+                />
+                <div className="add-remove-container">
+                  <i className="fas fa-plus" id="fileShareDependModalDisplay" onClick={this.openModalOnClick}/>
+                  <i className="fas fa-minus" />
+                </div>
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12">
+                <SizedSelectField
+                  dynamicClass="sized-select"
+                  labelText="Cluster Nodes:"
+                  selectID="cluster_nodes"
+                  selectSize="8"
+                  listData={[this.state.currentAsset.cluster_nodes]}
+                  openOnClick={this.openOnClick}
+                />
+                <div className="add-remove-container">
+                  <i className="fas fa-plus" id="clusterNodesModalDisplay" onClick={this.openModalOnClick}/>
+                  <i className="fas fa-minus" />
+                </div>
+              </div>
+  
+            </div>
+            <div className="row fourth-row">
+  
+             <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+                <SizedSelectField
+                  dynamicClass="sized-select"
+                  labelText="Applications"
+                  selectID="select-applications-list"
+                  selectSize="8"
+                  listData={[this.state.currentAsset.applications]}
+                  openOnClick={this.openOnClick}
+                />
+                <div className="add-remove-container">
+                  <i className="fas fa-plus" id="applicationsModalDisplay" onClick={this.openModalOnClick}/>
+                  <i className="fas fa-minus" />
+                </div>
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12">
+                <SizedSelectField
+                  dynamicClass="sized-select"
+                  labelText="Firewall:"
+                  selectID="firewall"
+                  selectSize="8"
+                  listData={[this.state.currentAsset.firewall]}
+                  openOnClick={this.openOnClick}
+                />
+                <div className="add-remove-container">
+                  <i className="fas fa-plus" id="fireWallModalDisplay" onClick={this.openModalOnClick}/>
+                  <i className="fas fa-minus" />
+                </div>
+              </div>
+  
+            </div>
+  
+            <div className="row fourth-row">
+              <div className="col-lg-8 col-md-8 col-xs-12 app-env-col" style={{margin: '0 auto'}}>
+                <div className="form-group">
+                  <label className="notes-label app-data-label" htmlFor="notes-field">Notes:</label>
+                  <textarea className="form-control" id="notes-field" rows="8" defaultValue={this.state.currentAsset.notes}  onChange={this.state.notesOnChange}/>
+                </div>
+              </div>
+            </div>
+  
+           
+            <div className="row submit-row">
+              <div className="col-lg-3 col-md-3 col-xs-6 submit-container">
+                <button type="button" onClick={this.submitForm} className="submit-button">Submit Form</button>
+              </div>
+            </div>
+            <SelectModal 
+              displayValue={{display: this.state.modalDisplay.applicationsModalDisplay}}
+              labelValue="Select An Application"
+              className="add-modal"
+              selectId="application-select"
+              onClose={this.closeModalOnClick}
+              modalSubmit={this.modalSubmit}
+              placeHolder="Application Name..."
+              submitText="Add Application"
+              listData={this.state.appNames}
+              closeId="closeapplicationsModalDisplay"
+              submitType="apps"
+            />
+            <SelectModal 
+              displayValue={{display: this.state.modalDisplay.storageDependenciesModalDisplay}}
+              labelValue="Select A Dependency"
+              className="add-modal"
+              selectId="asset-input"
+              onClose={this.closeModalOnClick}
+              modalSubmit={this.modalSubmit}
+              placeHolder="Dependency Name..."
+              submitText="Add Dependency"
+              listData={this.state.assetNames}
+              closeId="closestorageDependenciesModalDisplay"
+              submitType="storageDependencies"
+            />            
+            <SelectModal 
+              displayValue={{display: this.state.modalDisplay.dbAssetDependModalDisplay}}
+              labelValue="Select A Dependency"
+              className="add-modal"
+              selectId="asset-input"
+              onClose={this.closeModalOnClick}
+              modalSubmit={this.modalSubmit}
+              placeHolder="Dependency Name..."
+              submitText="Add Dependency"
+              listData={this.state.assetNames}
+              closeId="closedbAssetDependenciesModalDisplay"
+              submitType="dbAssetDependencies"
+            />            
+            <SelectModal 
+              displayValue={{display: this.state.modalDisplay.networkDependModalDisplay}}
+              labelValue="Select A Dependency"
+              className="add-modal"
+              selectId="asset-input"
+              onClose={this.closeModalOnClick}
+              modalSubmit={this.modalSubmit}
+              placeHolder="Dependency Name..."
+              submitText="Add Dependency"
+              listData={this.state.assetNames}
+              closeId="closenetworkDependModalDisplay"
+              submitType="networkDependencies"
+            />            
+            <SelectModal 
+              displayValue={{display: this.state.modalDisplay.fileShareDependModalDisplay}}
+              labelValue="Select A Dependency"
+              className="add-modal"
+              selectId="asset-input"
+              onClose={this.closeModalOnClick}
+              modalSubmit={this.modalSubmit}
+              placeHolder="Dependency Name..."
+              submitText="Add Dependency"
+              listData={this.state.assetNames}
+              closeId="closefileShareeDependModalDisplay"
+              submitType="fileShareDependencies"
+            />            
+            <SelectModal 
+              displayValue={{display: this.state.modalDisplay.clusterNodesModalDisplay}}
+              labelValue="Select A Dependency"
+              className="add-modal"
+              selectId="asset-input"
+              onClose={this.closeModalOnClick}
+              modalSubmit={this.modalSubmit}
+              placeHolder="Cluster Node Name..."
+              submitText="Add Cluster Node"
+              listData={this.state.assetNames}
+              closeId="closeclusterNodesModalDisplay"
+              submitType="clusterNodes"
+            />            
+            <SelectModal 
+              displayValue={{display: this.state.modalDisplay.fireWallModalDisplay}}
+              labelValue="Select A Firewall"
+              className="add-modal"
+              selectId="asset-input"
+              onClose={this.closeModalOnClick}
+              modalSubmit={this.modalSubmit}
+              placeHolder="Firewall Name..."
+              submitText="Add Firewall"
+              listData={this.state.assetNames}
+              closeId="closefireWallModalDisplay"
+              submitType="fireWallDependencies"
+            />            
+          </div>
+        );
+      }
     } else {
       return (
         //<h1>Please Login!</h1>

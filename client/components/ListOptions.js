@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import uuidv1 from 'uuid';
 
 const ListOptions = (props) => {
 
   const listArr = props.data.map((item) => 
-    <option selected={props.defaultSelected} value={item} key={item}>{item}</option>
+    <option selected={props.defaultSelected} value={item} key={uuidv1()}>{item}</option>
   );
 
   return (

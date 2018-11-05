@@ -1,5 +1,5 @@
 {
-  "name": "curvature-map",
+  "name": "map",
   "version": "1.0.0",
   "description": "MAP application",
   "main": "app.js",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "C:\\\\programming\\\\OneDrive\\\\git_repositories\\\\curvature-map"
+    "url": "https://github.com/tmurph850/map"
   },
   "keywords": [
     "MAP"

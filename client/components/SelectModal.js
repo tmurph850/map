@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import uuidv1 from 'uuid';
 
 const SelectModal = (props) => {
 
@@ -9,11 +10,11 @@ const SelectModal = (props) => {
 
   if ( props.listData !== undefined && Array.isArray(props.listData) && Array.isArray(props.listData[0]) !== true && props.listData.length > 0 ) {
     listOptions = props.listData.map((data) =>
-      <option value={data} key={data}>{data}</option>
+      <option value={data} key={uuidv1()}>{data}</option>
     );
   } else if ( props.listData !== undefined && props.listData[0] !== undefined ) {
     listOptions = props.listData[0].map((data) =>
-      <option value={data} key={data}>{data}</option>
+      <option value={data} key={uuidv1()}>{data}</option>
     );
   } else {
     listOptions = [];
