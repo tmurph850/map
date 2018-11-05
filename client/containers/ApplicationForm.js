@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Redirect } from 'react-router-dom';
 import { getData } from '../actions/getData';
 import { postData } from '../actions/postData';
 import SelectApplication from '../components/ApplicationForm/SelectApplication';
@@ -29,7 +30,9 @@ class ApplicationForm extends Component {
       showLoading: false,
       postedFormData: false,
       postedAssetOrDep: false,
-      previouslySubmitted: false
+      previouslySubmitted: false,
+      userAuthCurrent: this.props.userAuth.length - 1,
+      sessionAuth: sessionStorage.getItem('isUserAuth')
     };
 
     this.appOnClick = this.appOnClick.bind(this);
@@ -421,221 +424,232 @@ class ApplicationForm extends Component {
   }
 
   render() {
-    if ( this.state.applicationSelected === false ) {
-      return (
-        <div className="application-form-container">
-          <header>
-            <h1 className="form-header">Application Data Form</h1>
-          </header>
-          <SelectApplication
-            appNames={this.state.appNames}
-            appOnClick={this.appOnClick}
-            placeHolder="Please Select an Application"
-          />
-        </div>
-      );
-    } else {
+    if ( this.state.sessionAuth === "true" || this.props.userAuth !== undefined && this.props.userAuth.length > 0 && this.props.userAuth[this.state.userAuthCurrent].isAuthenticated === true ) {
+      if ( this.state.applicationSelected === false ) {
         return (
           <div className="application-form-container">
             <header>
               <h1 className="form-header">Application Data Form</h1>
             </header>
-
             <SelectApplication
               appNames={this.state.appNames}
               appOnClick={this.appOnClick}
               placeHolder="Please Select an Application"
             />
-
-            <div className="row first-row">
-
-              <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
-
-                <div className="form-group">
-                  <label className="app-data-label" htmlFor="application-id">Application ID:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="application-id"
-                      readOnly
-                      value={this.state.currentApp.application}
-                    />
-                  </div>
-                </div>
-
-              </div>
-
-              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
-
-                <div className="form-group">
-                  <label className="app-data-label" htmlFor="application-env">Application Environment:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="application-env"
-                      value={this.state.currentApp.application_environment}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-            <div className="row second-row">
-
-              <div className="col-lg-12 col-md-12 col-xs-12 app-desc-col">
-
-                <div className="form-group">
-                  <label className="app-data-label" htmlFor="application-desc">Application Description:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="application-desc"
-                      value={this.state.currentApp.application_description}
-                      onChange={this.descOnChange}
-                    />
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-            <div className="row third-row">
-
-              <div className="col-lg-6 col-md-6 col-xs-12 primary-con-col">
-
-                <div className="form-group">
-                  <label className="app-data-label" htmlFor="primary-con">Primary Contact:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="primary-con"
-                      value={this.state.currentApp.primary_contact}
-                      onChange={this.pContactOnChange}
-                    />
-                  </div>
-                </div>
-
-              </div>
-
-              <div className="col-lg-6 col-md-6 col-xs-12 secondary-con-col">
-
-                <div className="form-group">
-                  <label className="app-data-label" htmlFor="application-env">Secondary Contact:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="secondary-con"
-                      value={this.state.currentApp.secondary_contact}
-                      onChange={this.sContactOnChange}
-                    />
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-            <div className="row fourth-row">
-
-              <div className="col-lg-6 col-md-6 col-xs-12 business-owner-col">
-
-                <div className="form-group">
-                  <label className="app-data-label" htmlFor="business-owner">Application Business Owner:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="business-owner"
-                      value={this.state.currentApp.application_business}
-                      onChange={this.businessOnChange}
-                    />
-                  </div>
-                </div>
-
-              </div>
-
-              <div className="col-lg-6 col-md-6 col-xs-12 app-sme-col">
-
-                <div className="form-group">
-                  <label className="app-data-label" htmlFor="app-sme">Application SME:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="app-sme"
-                      value={this.state.currentApp.application_sme}
-                      onChange={this.smeOnChange}
-                    />
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-
-            <div className="row fifth-row">
-              <div className="col-xl-6 col-lg-6 col-md-6 col-xs-12">
-                <SizedSelectField
-                  dynamicClass="sized-select"
-                  labelText="Application Dependencies:"
-                  selectID="select-dependencies"
-                  selectSize="10"
-                  listData={this.state.currentDependencies}
-                  openOnClick={this.openOnClick}
-                />
-                <div className="add-remove-container">
-                  <i className="fas fa-plus" onClick={this.openDependencyModal}/>
-                  <i className="fas fa-minus" />
-                </div> 
-              </div>
-              <div className="col-xl-6 col-lg-6 col-md-6 col-xs-12">
-                <SizedSelectField
-                  dynamicClass="sized-select"
-                  labelText="Asset List:"
-                  selectID="select-asset-list"
-                  selectSize="10"
-                  listData={this.state.currentAssets}
-                  openOnClick={this.openOnClick}
-                />
-                <div className="add-remove-container">
-                  <i className="fas fa-plus" onClick={this.openAssetModal}/>
-                  <i className="fas fa-minus" />
-                </div>
-              </div>
-            </div>
-            <div className="row submit-row">
-              <div className="col-lg-3 col-md-3 col-xs-6 submit-container">
-                <button type="button" onClick={this.submitForm} className="submit-button">Submit Form</button>
-              </div>
-            </div>
-            <ModalComponent 
-              displayValue={{display: this.state.dependencyModalDisplay}}
-              labelValue="Provide a Dependency Name"
-              className="add-modal"
-              inputId="dependency-input"
-              onClose={this.closeDependencyModal}
-              inputClassName="modal-input"
-              onChangeFunc={this.dependencyOnChange}
-              onSubmitFunc={this.addDependency}
-              stateValue={this.state.newDependency}
-              placeHolder="Dependency Name..."
-              submitText="Add Dependency"
-            />
-            <ModalComponent 
-              displayValue={{display: this.state.assetModalDisplay}}
-              labelValue="Provide an Asset Name"
-              className="add-modal"
-              inputId="asset-input"
-              onClose={this.closeAssetModal}
-              inputClassName="modal-input"
-              onChangeFunc={this.assetOnChange}
-              onSubmitFunc={this.addAsset}
-              stateValue={this.state.newAsset}
-              placeHolder="Asset Name..."
-              submitText="Add Asset"
-            />            
           </div>
         );
-      } 
+      } else {
+          return (
+            <div className="application-form-container">
+              <header>
+                <h1 className="form-header">Application Data Form</h1>
+              </header>
+  
+              <SelectApplication
+                appNames={this.state.appNames}
+                appOnClick={this.appOnClick}
+                placeHolder="Please Select an Application"
+              />
+  
+              <div className="row first-row">
+  
+                <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
+  
+                  <div className="form-group">
+                    <label className="app-data-label" htmlFor="application-id">Application ID:</label>
+                    <div>
+                      <input
+                        className="form-control inputdefault"
+                        id="application-id"
+                        readOnly
+                        value={this.state.currentApp.application}
+                      />
+                    </div>
+                  </div>
+  
+                </div>
+  
+                <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                  <div className="form-group">
+                    <label className="app-data-label" htmlFor="application-env">Application Environment:</label>
+                    <div>
+                      <input
+                        className="form-control inputdefault"
+                        id="application-env"
+                        value={this.state.currentApp.application_environment}
+                        onChange={this.dynamicOnChange}
+                      />
+                    </div>
+                  </div>
+  
+                </div>
+  
+              </div>
+              <div className="row second-row">
+  
+                <div className="col-lg-12 col-md-12 col-xs-12 app-desc-col">
+  
+                  <div className="form-group">
+                    <label className="app-data-label" htmlFor="application-desc">Application Description:</label>
+                    <div>
+                      <input
+                        className="form-control inputdefault"
+                        id="application-desc"
+                        value={this.state.currentApp.application_description}
+                        onChange={this.descOnChange}
+                      />
+                    </div>
+                  </div>
+  
+                </div>
+  
+              </div>
+              <div className="row third-row">
+  
+                <div className="col-lg-6 col-md-6 col-xs-12 primary-con-col">
+  
+                  <div className="form-group">
+                    <label className="app-data-label" htmlFor="primary-con">Primary Contact:</label>
+                    <div>
+                      <input
+                        className="form-control inputdefault"
+                        id="primary-con"
+                        value={this.state.currentApp.primary_contact}
+                        onChange={this.pContactOnChange}
+                      />
+                    </div>
+                  </div>
+  
+                </div>
+  
+                <div className="col-lg-6 col-md-6 col-xs-12 secondary-con-col">
+  
+                  <div className="form-group">
+                    <label className="app-data-label" htmlFor="application-env">Secondary Contact:</label>
+                    <div>
+                      <input
+                        className="form-control inputdefault"
+                        id="secondary-con"
+                        value={this.state.currentApp.secondary_contact}
+                        onChange={this.sContactOnChange}
+                      />
+                    </div>
+                  </div>
+  
+                </div>
+  
+              </div>
+              <div className="row fourth-row">
+  
+                <div className="col-lg-6 col-md-6 col-xs-12 business-owner-col">
+  
+                  <div className="form-group">
+                    <label className="app-data-label" htmlFor="business-owner">Application Business Owner:</label>
+                    <div>
+                      <input
+                        className="form-control inputdefault"
+                        id="business-owner"
+                        value={this.state.currentApp.application_business}
+                        onChange={this.businessOnChange}
+                      />
+                    </div>
+                  </div>
+  
+                </div>
+  
+                <div className="col-lg-6 col-md-6 col-xs-12 app-sme-col">
+  
+                  <div className="form-group">
+                    <label className="app-data-label" htmlFor="app-sme">Application SME:</label>
+                    <div>
+                      <input
+                        className="form-control inputdefault"
+                        id="app-sme"
+                        value={this.state.currentApp.application_sme}
+                        onChange={this.smeOnChange}
+                      />
+                    </div>
+                  </div>
+  
+                </div>
+  
+              </div>
+  
+              <div className="row fifth-row">
+                <div className="col-xl-6 col-lg-6 col-md-6 col-xs-12">
+                  <SizedSelectField
+                    dynamicClass="sized-select"
+                    labelText="Application Dependencies:"
+                    selectID="select-dependencies"
+                    selectSize="10"
+                    listData={this.state.currentDependencies}
+                    openOnClick={this.openOnClick}
+                  />
+                  <div className="add-remove-container">
+                    <i className="fas fa-plus" onClick={this.openDependencyModal}/>
+                    <i className="fas fa-minus" />
+                  </div> 
+                </div>
+                <div className="col-xl-6 col-lg-6 col-md-6 col-xs-12">
+                  <SizedSelectField
+                    dynamicClass="sized-select"
+                    labelText="Asset List:"
+                    selectID="select-asset-list"
+                    selectSize="10"
+                    listData={this.state.currentAssets}
+                    openOnClick={this.openOnClick}
+                  />
+                  <div className="add-remove-container">
+                    <i className="fas fa-plus" onClick={this.openAssetModal}/>
+                    <i className="fas fa-minus" />
+                  </div>
+                </div>
+              </div>
+              <div className="row submit-row">
+                <div className="col-lg-3 col-md-3 col-xs-6 submit-container">
+                  <button type="button" onClick={this.submitForm} className="submit-button">Submit Form</button>
+                </div>
+              </div>
+              <ModalComponent 
+                displayValue={{display: this.state.dependencyModalDisplay}}
+                labelValue="Provide a Dependency Name"
+                className="add-modal"
+                inputId="dependency-input"
+                onClose={this.closeDependencyModal}
+                inputClassName="modal-input"
+                onChangeFunc={this.dependencyOnChange}
+                onSubmitFunc={this.addDependency}
+                stateValue={this.state.newDependency}
+                placeHolder="Dependency Name..."
+                submitText="Add Dependency"
+              />
+              <ModalComponent 
+                displayValue={{display: this.state.assetModalDisplay}}
+                labelValue="Provide an Asset Name"
+                className="add-modal"
+                inputId="asset-input"
+                onClose={this.closeAssetModal}
+                inputClassName="modal-input"
+                onChangeFunc={this.assetOnChange}
+                onSubmitFunc={this.addAsset}
+                stateValue={this.state.newAsset}
+                placeHolder="Asset Name..."
+                submitText="Add Asset"
+              />            
+            </div>
+          );
+        } 
+    } else {
+      return (
+        <Redirect
+            to={{
+              pathname: "/",
+              state: { from: this.props.location }
+            }}
+          />
+      );
+    }
   }
 
 }
@@ -657,7 +671,8 @@ const mapStateToProps = (state) => {
     currentAssets: state.currentAssets,
     currentDependencies: state.currentDependencies,
     appFormResponse: state.appFormResponse,
-    assetOrDepResponse: state.assetOrDepResponse
+    assetOrDepResponse: state.assetOrDepResponse,
+    userAuth: state.userAuth
   };
 };
   

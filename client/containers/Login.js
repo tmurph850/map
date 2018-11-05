@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { newLogIn } from '../actions/newLogIn';
+import { handleAuth } from '../actions/handleAuth';
 
 class Login extends Component {
   constructor(props) {
@@ -24,6 +25,8 @@ class Login extends Component {
     if ( this.props.logInResponse.length !== nextProps.logInResponse.length ) {
       let len = nextProps.logInResponse.length - 1;
       if ( nextProps.logInResponse[len] && nextProps.logInResponse[len].status === "success" ) {
+        this.props.handleAuth("authenticate");
+        sessionStorage.setItem('isUserAuth', "true");
         const newLocation = {
           pathname: '/asset-form'
         };
@@ -61,7 +64,7 @@ class Login extends Component {
   }
 
   render() {
-    if ( window.location.href.includes("login") ) {
+    //if ( window.location.href.includes("login") ) {
       return (
         <div className="signup-view">
 
@@ -110,7 +113,7 @@ class Login extends Component {
 
         </div>
       );
-    } else {
+    /*} else {
       return (
         <div className="signup-view">
 
@@ -159,7 +162,7 @@ class Login extends Component {
 
         </div>
       );
-    }
+    }*/
   }
 }
 
@@ -173,13 +176,15 @@ Login.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    logInResponse: state.logInResponse
+    logInResponse: state.logInResponse,
+    userAuth: state.userAuth
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    newLogIn
+    newLogIn,
+    handleAuth
   }, dispatch);
 };
 

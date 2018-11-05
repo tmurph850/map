@@ -11,6 +11,7 @@ import getCurrentDependenciesReducer from './getCurrentDependenciesReducer';
 import postAppFormReducer from './postAppFormReducer';
 import postAssetOrDepReducer from './postAssetOrDepReducer';
 import getAssetNamesAndTypesReducer from './getAssetNamesAndTypesReducer';
+import handleAuthReducer from './handleAuthReducer';
 
 const rootReducer = combineReducers({
   signUpResponse: NewSignUpReducer,
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
   currentDependencies: getCurrentDependenciesReducer,
   appFormResponse: postAppFormReducer,
   assetOrDepResponse: postAssetOrDepReducer,
-  assetNamesAndTypes: getAssetNamesAndTypesReducer
+  assetNamesAndTypes: getAssetNamesAndTypesReducer,
+  userAuth: handleAuthReducer
 });
 
 export default rootReducer;
