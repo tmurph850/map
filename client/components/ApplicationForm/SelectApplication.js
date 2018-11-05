@@ -5,7 +5,7 @@ import uuidv1 from 'uuid';
 const SelectApplication = (props) => {
 
   const listOptions = props.appNames.map((app) => 
-    <option value ="" key={uuidv1()}>{app}</option>
+    <option value={app} key={app + uuidv1()}>{app}</option>
   );
 
   return (
