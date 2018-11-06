@@ -9,6 +9,7 @@ import SelectApplication from '../components/ApplicationForm/SelectApplication';
 import { getData } from '../actions/getData';
 import { postData } from '../actions/postData';
 import ListOptions from '../components/ListOptions';
+import chassisObj from '../common/chassisObj';
 
 class AssetForm extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class AssetForm extends Component {
       assetSelected: false,
       originalAssetState: {},
       currentAsset: {},
+      chassisObj: chassisObj,
       currentAssetType: "",
       serverDependencies: [],
       applications: [],
@@ -218,12 +220,37 @@ class AssetForm extends Component {
     let serverDependencies = currentAsset.server_dependencies;
     let theIndex = currentAsset.asset_type;
     let assetType = this.state.assetTypes[theIndex];
-    this.setState({
-      currentAsset: currentAsset,
-      currentAssetType: assetType,
-      serverDependencies: serverDependencies,
-      assetSelected: true
-    });
+
+    let assetId = currentAsset.asset_id;
+    let len = this.props.assetNamesAndTypes.length - 1;
+    let currentChassisArr = this.props.assetNamesAndTypes[len][4].data;
+    let chassisData;
+    let chassisRef;
+
+    if ( currentAsset.asset_type === 7 && currentAsset.is_chassis === true ) {
+      currentChassisArr.some(chassis => {
+        if ( assetId === chassis.asset_id ) {
+          chassisData = chassis;
+        }
+      });
+      chassisRef = Object.assign({}, chassisData);
+      this.setState({
+        currentAsset: currentAsset,
+        currentAssetType: assetType,
+        serverDependencies: serverDependencies,
+        chassisObj: chassisRef,
+        assetSelected: true
+      });
+    } else {
+      this.setState({
+        currentAsset: currentAsset,
+        currentAssetType: assetType,
+        serverDependencies: serverDependencies,
+        chassisObj: chassisObj,
+        assetSelected: true
+      });
+    }
+      
   }
 
   setOriginalState() {
@@ -379,6 +406,10 @@ class AssetForm extends Component {
     }
   }
 
+  chassisFieldOnChange(e) {
+
+  }
+
   getChassisInfo(type) {
     let assetId = this.state.currentAsset.asset_id;
     let len = this.props.assetNamesAndTypes.length - 1;
@@ -391,9 +422,19 @@ class AssetForm extends Component {
           chassisData = chassis;
         }
       });
+
+      let chassisRef = Object.assign({}, chassisData);
+      this.setState({
+        chassisObj: chassisRef
+      });
+
+    } else {
+      this.setState({
+        chassisObj
+      });
     }
 
-    if ( type === "ilo" && chassisData !== undefined ) {
+    /*if ( type === "ilo" && chassisData !== undefined ) {
       return chassisData.ilo_address;
     } else if ( type === "slots" && chassisData !== undefined ) {
       return chassisData.number_of_slots;
@@ -431,7 +472,8 @@ class AssetForm extends Component {
       return chassisData.slot_16;
     } else {
       return "";
-    }
+    }*/
+
   }
 
   returnAssetType() {
@@ -2415,7 +2457,7 @@ class AssetForm extends Component {
                   <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("ilo")}
+                      value={this.state.chassisObj.ilo_address}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2429,7 +2471,7 @@ class AssetForm extends Component {
                     <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slots")}
+                      value={this.state.chassisObj.number_of_slots}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2445,7 +2487,7 @@ class AssetForm extends Component {
                   <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot1")}
+                      value={this.state.chassisObj.slot_1}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2459,7 +2501,7 @@ class AssetForm extends Component {
                     <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot2")}
+                      value={this.state.chassisObj.slot_2}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2475,7 +2517,7 @@ class AssetForm extends Component {
                   <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot3")}
+                      value={this.state.chassisObj.slot_3}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2489,7 +2531,7 @@ class AssetForm extends Component {
                     <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot4")}
+                      value={this.state.chassisObj.slot_4}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2505,7 +2547,7 @@ class AssetForm extends Component {
                   <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot5")}
+                      value={this.state.chassisObj.slot_5}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2519,7 +2561,7 @@ class AssetForm extends Component {
                     <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot6")}
+                      value={this.state.chassisObj.slot_6}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2535,7 +2577,7 @@ class AssetForm extends Component {
                   <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot7")}
+                      value={this.state.chassisObj.slot_7}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2549,7 +2591,7 @@ class AssetForm extends Component {
                     <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot8")}
+                      value={this.state.chassisObj.slot_8}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2565,7 +2607,7 @@ class AssetForm extends Component {
                   <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot")}
+                      value={this.state.chassisObj.slot_9}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2579,7 +2621,7 @@ class AssetForm extends Component {
                     <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot10")}
+                      value={this.state.chassisObj.slot_10}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2595,7 +2637,7 @@ class AssetForm extends Component {
                   <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot11")}
+                      value={this.state.chassisObj.slot_11}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2609,7 +2651,7 @@ class AssetForm extends Component {
                     <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot12")}
+                      value={this.state.chassisObj.slot_12}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2625,7 +2667,7 @@ class AssetForm extends Component {
                   <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot13")}
+                      value={this.state.chassisObj.slot_13}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2639,7 +2681,7 @@ class AssetForm extends Component {
                     <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot14")}
+                      value={this.state.chassisObj.slot_14}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2655,7 +2697,7 @@ class AssetForm extends Component {
                   <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot15")}
+                      value={this.state.chassisObj.slot_15}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
@@ -2669,7 +2711,7 @@ class AssetForm extends Component {
                     <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getChassisInfo("slot16")}
+                      value={this.state.chassisObj.slot_16}
                       onChange={this.dynamicOnChange}
                     />
                   </div>
