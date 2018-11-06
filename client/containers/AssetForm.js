@@ -407,10 +407,11 @@ class AssetForm extends Component {
   }
 
   chassisFieldOnChange(e) {
+    let chassisStateObj = this.state.chassisObj;
 
   }
 
-  getChassisInfo(type) {
+  /*getChassisInfo(type) {
     let assetId = this.state.currentAsset.asset_id;
     let len = this.props.assetNamesAndTypes.length - 1;
     let current = this.props.assetNamesAndTypes[len][4].data;
@@ -434,7 +435,7 @@ class AssetForm extends Component {
       });
     }
 
-    /*if ( type === "ilo" && chassisData !== undefined ) {
+    if ( type === "ilo" && chassisData !== undefined ) {
       return chassisData.ilo_address;
     } else if ( type === "slots" && chassisData !== undefined ) {
       return chassisData.number_of_slots;
@@ -472,9 +473,9 @@ class AssetForm extends Component {
       return chassisData.slot_16;
     } else {
       return "";
-    }*/
+    }
 
-  }
+  }*/
 
   returnAssetType() {
     let assetTypes = this.state.assetTypeArray;
@@ -2452,13 +2453,13 @@ class AssetForm extends Component {
               <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
   
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="asset_type">ILO Address:</label>
+                  <label className="app-data-label" htmlFor="ilo_address">ILO Address:</label>
                   <div>
                   <input
                       className="form-control inputdefault"
-                      id="subnet"
+                      id="ilo_address"
                       value={this.state.chassisObj.ilo_address}
-                      onChange={this.dynamicOnChange}
+                      onChange={this.chassisFieldOnChange}
                     />
                   </div>
                 </div>
@@ -2466,13 +2467,13 @@ class AssetForm extends Component {
               </div>
               <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="subnet">Slots:</label>
+                  <label className="app-data-label" htmlFor="number_of_slots">Slots:</label>
                   <div>
                     <input
                       className="form-control inputdefault"
-                      id="subnet"
+                      id="number_of_slots"
                       value={this.state.chassisObj.number_of_slots}
-                      onChange={this.dynamicOnChange}
+                      onChange={this.chassisFieldOnChange}
                     />
                   </div>
                 </div>
@@ -2482,13 +2483,13 @@ class AssetForm extends Component {
               <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
   
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="asset_type">Slot #1:</label>
+                  <label className="app-data-label" htmlFor="slot_1">Slot #1:</label>
                   <div>
-                  <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_1}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_1}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
@@ -2496,13 +2497,13 @@ class AssetForm extends Component {
               </div>
               <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="subnet">Slot #2:</label>
+                  <label className="app-data-label" htmlFor="slot_2">Slot #2:</label>
                   <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_2}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_2}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
@@ -2512,13 +2513,13 @@ class AssetForm extends Component {
               <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
   
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="asset_type">Slot #3:</label>
+                  <label className="app-data-label" htmlFor="slot_3">Slot #3:</label>
                   <div>
-                  <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_3}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_3}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
@@ -2526,13 +2527,13 @@ class AssetForm extends Component {
               </div>
               <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="subnet">Slot #4:</label>
+                  <label className="app-data-label" htmlFor="slot_4">Slot #4:</label>
                   <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_4}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_4}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
@@ -2542,13 +2543,13 @@ class AssetForm extends Component {
               <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
   
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="asset_type">Slot #5:</label>
+                  <label className="app-data-label" htmlFor="slot_5">Slot #5:</label>
                   <div>
-                  <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_5}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_5}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
@@ -2556,13 +2557,13 @@ class AssetForm extends Component {
               </div>
               <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="subnet">Slot #6:</label>
+                  <label className="app-data-label" htmlFor="slot_6">Slot #6:</label>
                   <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_6}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_6}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
@@ -2572,13 +2573,13 @@ class AssetForm extends Component {
               <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
   
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="asset_type">Slot #7:</label>
+                  <label className="app-data-label" htmlFor="slot_7">Slot #7:</label>
                   <div>
-                  <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_7}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_7}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
@@ -2586,13 +2587,13 @@ class AssetForm extends Component {
               </div>
               <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="subnet">Slot #8:</label>
+                  <label className="app-data-label" htmlFor="slot_8">Slot #8:</label>
                   <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_8}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_8}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
@@ -2602,13 +2603,13 @@ class AssetForm extends Component {
               <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
   
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="asset_type">Slot #9:</label>
+                  <label className="app-data-label" htmlFor="slot_9">Slot #9:</label>
                   <div>
-                  <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_9}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_9}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
@@ -2616,13 +2617,13 @@ class AssetForm extends Component {
               </div>
               <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="subnet">Slot #10:</label>
+                  <label className="app-data-label" htmlFor="slot_10">Slot #10:</label>
                   <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_10}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_10}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
@@ -2632,13 +2633,13 @@ class AssetForm extends Component {
               <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
   
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="asset_type">Slot #11:</label>
+                  <label className="app-data-label" htmlFor="slot_11">Slot #11:</label>
                   <div>
-                  <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_11}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_11}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
@@ -2646,13 +2647,13 @@ class AssetForm extends Component {
               </div>
               <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="subnet">Slot #12:</label>
+                  <label className="app-data-label" htmlFor="slot_12">Slot #12:</label>
                   <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_12}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_12}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
@@ -2662,13 +2663,13 @@ class AssetForm extends Component {
               <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
   
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="asset_type">Slot #13:</label>
+                  <label className="app-data-label" htmlFor="slot_13">Slot #13:</label>
                   <div>
-                  <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_13}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_13}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
@@ -2676,13 +2677,13 @@ class AssetForm extends Component {
               </div>
               <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="subnet">Slot #14:</label>
+                  <label className="app-data-label" htmlFor="slot_14">Slot #14:</label>
                   <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_14}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_14}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
@@ -2692,13 +2693,13 @@ class AssetForm extends Component {
               <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
   
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="asset_type">Slot #15:</label>
+                  <label className="app-data-label" htmlFor="slot_15">Slot #15:</label>
                   <div>
-                  <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_15}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_15}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
@@ -2706,13 +2707,13 @@ class AssetForm extends Component {
               </div>
               <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="subnet">Slot #16:</label>
+                  <label className="app-data-label" htmlFor="slot_16">Slot #16:</label>
                   <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.chassisObj.slot_16}
-                      onChange={this.dynamicOnChange}
+                    <ListOptions
+                      data={this.state.assetNames}
+                      defaultSelected={this.state.chassisObj.slot_16}
+                      OnClickHandler={this.chassisFieldOnChange}
+                      type="chassisSlot"
                     />
                   </div>
                 </div>
