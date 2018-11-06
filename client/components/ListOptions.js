@@ -10,7 +10,7 @@ const ListOptions = (props) => {
     if ( props.type && props.type === "chassisSlot" && props.defaultSelected === "" ) {
       listArr.push(<option selected value="Not Assigned" key={uuidv1()}>Not Assigned</option>);
     }
-
+    
     props.data.forEach(item => {
       if ( item === props.defaultSelected ) {
        listArr.push(<option selected value={item} key={uuidv1()}>{item}</option>);
@@ -23,11 +23,19 @@ const ListOptions = (props) => {
       <option selected={props.defaultSelected} value={item} key={uuidv1()}>{item}</option>
     );*/
 
-    return (
-      <select className="form-control list-options" onChange={(e) => props.OnClickHandler(e)}>
-        {listArr}
-      </select>
-    );
+    if ( props.htmlId ) {
+      return (
+        <select className="form-control list-options" id={props.htmlId} onChange={(e) => props.OnClickHandler(e)}>
+          {listArr}
+        </select>
+      );
+    } else {
+      return (
+        <select className="form-control list-options" onChange={(e) => props.OnClickHandler(e)}>
+          {listArr}
+        </select>
+      );
+    }
   }
 
   if ( Array.isArray(props.data) && props.data.length === 0 ) {

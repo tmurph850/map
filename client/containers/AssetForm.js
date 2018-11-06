@@ -62,6 +62,8 @@ class AssetForm extends Component {
     this.closeModalOnClick = this.closeModalOnClick.bind(this);
     this.modalSubmit = this.modalSubmit.bind(this);
     this.setAssetTypeOnChange = this.setAssetTypeOnChange.bind(this);
+    this.chassisFieldOnChange = this.chassisFieldOnChange.bind(this);
+    //this.chassisSlotFieldOnChange = this.chassisSlotFieldOnChange.bind(this);
   }
 
   componentDidMount() {
@@ -407,8 +409,15 @@ class AssetForm extends Component {
   }
 
   chassisFieldOnChange(e) {
-    let chassisStateObj = this.state.chassisObj;
+    let chassisStateObj = Object.assign({}, this.state.chassisObj);
+    let theId = e.target.id;
+    let newVal = e.target.value;
 
+    chassisStateObj[theId] = newVal;
+
+    this.setState({
+      chassisObj: chassisStateObj
+    });
   }
 
   /*getChassisInfo(type) {
@@ -2490,6 +2499,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_1}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_1"
                     />
                   </div>
                 </div>
@@ -2504,6 +2514,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_2}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_2"
                     />
                   </div>
                 </div>
@@ -2520,6 +2531,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_3}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_3"
                     />
                   </div>
                 </div>
@@ -2534,6 +2546,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_4}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_4"
                     />
                   </div>
                 </div>
@@ -2550,6 +2563,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_5}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_5"
                     />
                   </div>
                 </div>
@@ -2564,6 +2578,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_6}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_6"
                     />
                   </div>
                 </div>
@@ -2580,6 +2595,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_7}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_7"
                     />
                   </div>
                 </div>
@@ -2594,6 +2610,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_8}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_8"
                     />
                   </div>
                 </div>
@@ -2610,6 +2627,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_9}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_9"
                     />
                   </div>
                 </div>
@@ -2624,6 +2642,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_10}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_10"
                     />
                   </div>
                 </div>
@@ -2640,6 +2659,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_11}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_11"
                     />
                   </div>
                 </div>
@@ -2654,6 +2674,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_12}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_12"
                     />
                   </div>
                 </div>
@@ -2670,6 +2691,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_13}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_13"
                     />
                   </div>
                 </div>
@@ -2684,6 +2706,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_14}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_14"
                     />
                   </div>
                 </div>
@@ -2700,6 +2723,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_15}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_15"
                     />
                   </div>
                 </div>
@@ -2714,6 +2738,7 @@ class AssetForm extends Component {
                       defaultSelected={this.state.chassisObj.slot_16}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
+                      htmlId="slot_16"
                     />
                   </div>
                 </div>
