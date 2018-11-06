@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 //const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
-/*const UglifyJSPlugin = require('uglifyjs-webpack-plugin');*/
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
   entry: './client/index.js',
@@ -66,6 +66,9 @@ const config = {
       // Load a custom template (lodash by default see the FAQ for details)
       template: './client/index.html'
     }),
+    /*new UglifyJSPlugin({
+      test: /\.js(\?.*)?$/i
+    }),*/
     //new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ]

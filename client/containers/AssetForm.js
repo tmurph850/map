@@ -59,6 +59,7 @@ class AssetForm extends Component {
     this.openModalOnClick = this.openModalOnClick.bind(this);
     this.closeModalOnClick = this.closeModalOnClick.bind(this);
     this.modalSubmit = this.modalSubmit.bind(this);
+    this.setAssetTypeOnChange = this.setAssetTypeOnChange.bind(this);
   }
 
   componentDidMount() {
@@ -128,6 +129,24 @@ class AssetForm extends Component {
       assetTypes,
       assetTypeArray
     }, this.relateAssetTypes);
+  }
+
+  setAssetTypeOnChange(e) {
+    let assetType = e.target.value;
+    let assetTypes = this.state.assetTypes;
+    let keys = Object.keys(assetTypes);
+    let currentAsset = this.state.currentAsset;
+    let assetInteger;
+    keys.some(prop => {
+      if ( assetTypes[prop] === assetType ) {
+        assetInteger = Number(prop);
+      }
+    });
+    currentAsset.asset_type = assetInteger;
+    this.setState({
+      currentAssetType: assetType,
+      currentAsset
+    });
   }
 
   setAppNames() {
@@ -355,6 +374,61 @@ class AssetForm extends Component {
       return bladeData.chassis_slot_number;
     } else if ( type === "parent" && bladeData !== undefined && bladeData.parent_asset_id !== undefined ) {
       return bladeData.parent_asset_id;
+    } else {
+      return "";
+    }
+  }
+
+  getChassisInfo(type) {
+    let assetId = this.state.currentAsset.asset_id;
+    let len = this.props.assetNamesAndTypes.length - 1;
+    let current = this.props.assetNamesAndTypes[len][4].data;
+    let chassisData;
+
+    if ( current !== undefined ) {
+      current.some(chassis => {
+        if ( assetId === chassis.asset_id ) {
+          chassisData = chassis;
+        }
+      });
+    }
+
+    if ( type === "ilo" && chassisData !== undefined ) {
+      return chassisData.ilo_address;
+    } else if ( type === "slots" && chassisData !== undefined ) {
+      return chassisData.number_of_slots;
+    } else if ( type === "slot1" && chassisData ) {
+      return chassisData.slot_1;
+    } else if ( type === "slot2" && chassisData ) {
+      return chassisData.slot_2;
+    } else if ( type === "slot3" && chassisData ) {
+      return chassisData.slot_3;
+    } else if ( type === "slot4" && chassisData ) {
+      return chassisData.slot_4;
+    } else if ( type === "slot5" && chassisData ) {
+      return chassisData.slot_5;
+    } else if ( type === "slot6" && chassisData ) {
+      return chassisData.slot_6;
+    } else if ( type === "slot7" && chassisData ) {
+      return chassisData.slot_7;
+    } else if ( type === "slot8" && chassisData ) {
+      return chassisData.slot_8;
+    } else if ( type === "slot9" && chassisData ) {
+      return chassisData.slot_9;
+    } else if ( type === "slot10" && chassisData ) {
+      return chassisData.slot_10;
+    } else if ( type === "slot11" && chassisData ) {
+      return chassisData.slot_11;
+    } else if ( type === "slot12" && chassisData ) {
+      return chassisData.slot_12;
+    } else if ( type === "slot13" && chassisData ) {
+      return chassisData.slot_13;
+    } else if ( type === "slot14" && chassisData ) {
+      return chassisData.slot_14;
+    } else if ( type === "slot15" && chassisData ) {
+      return chassisData.slot_15;
+    } else if ( type === "slot16" && chassisData ) {
+      return chassisData.slot_16;
     } else {
       return "";
     }
@@ -1104,8 +1178,9 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="asset_type">Asset Type:</label>
                   <div>
                     <ListOptions
-                      defaultSelected={this.state.currentAssetType}
                       data={this.state.assetTypeArray}
+                      defaultSelected={this.state.currentAssetType}
+                      OnClickHandler={this.setAssetTypeOnChange}
                     />
                   </div>
                 </div>
@@ -2323,6 +2398,283 @@ class AssetForm extends Component {
                 </div>
               </div>
   
+            </div>
+
+            <div className="row fourth-row">
+              <div className="blade-specific">
+                <h1>Chassis Specific Fields</h1>
+              </div>
+            </div>
+
+            <div className="row fourth-row">
+              <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_type">ILO Address:</label>
+                  <div>
+                  <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("ilo")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="subnet">Slots:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slots")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row fourth-row">
+              <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_type">Slot #1:</label>
+                  <div>
+                  <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot1")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="subnet">Slot #2:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot2")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row fourth-row">
+              <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_type">Slot #3:</label>
+                  <div>
+                  <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot3")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="subnet">Slot #4:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot4")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row fourth-row">
+              <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_type">Slot #5:</label>
+                  <div>
+                  <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot5")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="subnet">Slot #6:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot6")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row fourth-row">
+              <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_type">Slot #7:</label>
+                  <div>
+                  <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot7")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="subnet">Slot #8:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot8")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row fourth-row">
+              <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_type">Slot #9:</label>
+                  <div>
+                  <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="subnet">Slot #10:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot10")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row fourth-row">
+              <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_type">Slot #11:</label>
+                  <div>
+                  <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot11")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="subnet">Slot #12:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot12")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row fourth-row">
+              <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_type">Slot #13:</label>
+                  <div>
+                  <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot13")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="subnet">Slot #14:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot14")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row fourth-row">
+              <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_type">Slot #15:</label>
+                  <div>
+                  <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot15")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="subnet">Slot #16:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getChassisInfo("slot16")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
   
             <div className="row fourth-row">

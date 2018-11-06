@@ -10,6 +10,7 @@ import { getData } from '../actions/getData';
 import { postData } from '../actions/postData';
 import ListOptions from '../components/ListOptions';
 import emptyAsset from '../common/assetObj';
+import emptyApp from '../common/appObject';
 
 class NewForm extends Component {
   constructor(props) {
@@ -17,6 +18,8 @@ class NewForm extends Component {
     
     this.state = {
       currentAsset: emptyAsset,
+      currentAssetType: "",
+      currentApp: emptyApp,
       formType: "",
       formTypeSelected: false,
       modalDisplay: {
@@ -29,12 +32,26 @@ class NewForm extends Component {
         fireWallModalDisplay: "none"
       },
       userAuthCurrent: this.props.userAuth.length - 1,
-      sessionAuth: sessionStorage.getItem('isUserAuth')
+      sessionAuth: sessionStorage.getItem('isUserAuth'),
+      dependencyModalDisplay: false,
+      assetModalDisplay: false
     };
 
     this.dynamicOnChange = this.dynamicOnChange.bind(this);
     this.openModalOnClick = this.openModalOnClick.bind(this);
+    this.closeDependencyModal = this.closeDependencyModal.bind(this);
+    this.closeAssetModal = this.closeAssetModal.bind(this);
     this.selectFormType = this.selectFormType.bind(this);
+    this.openDependencyModal = this.openDependencyModal.bind(this);
+    this.openAssetModal = this.openAssetModal.bind(this);
+    this.modalSubmit = this.modalSubmit.bind(this);
+    this.modalSubmitApp = this.modalSubmitApp.bind(this);
+    this.pContactOnChange = this.pContactOnChange.bind(this);
+    this.sContactOnChange = this.sContactOnChange.bind(this);
+    this.businessOnChange = this.businessOnChange.bind(this);
+    this.smeOnChange = this.smeOnChange.bind(this);
+    this.descOnChange = this.descOnChange.bind(this);
+    this.setAssetTypeOnChange = this.setAssetTypeOnChange.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +80,15 @@ class NewForm extends Component {
     theCurrentApp.application_environment = e.target.value;
     this.setState({
       currentApp: theCurrentApp
+    });
+  }
+
+  dynamicArrOnChange(e) {
+    let currentApp = this.state.currentApp;
+    let prop = e.target.id;
+    currentApp[prop] = e.target.value;
+    this.setState({
+      currentApp
     });
   }
 
@@ -107,6 +133,17 @@ class NewForm extends Component {
     });
   }
 
+  openAssetModal() {
+    this.setState({
+      assetModalDisplay: "block"
+    });
+  }
+
+  openDependencyModal() {
+    this.setState({
+      dependencyModalDisplay: "block"
+    });
+  }
 
   openModalOnClick(e) {
     let prop = e.target.id;
@@ -176,6 +213,38 @@ class NewForm extends Component {
     return;
   }
 
+  modalSubmitApp(e, type, newValue) {
+    let prop;
+    let currentApp = this.state.currentApp;
+
+    if ( type === "appDependency" ) {
+      prop = "application_dependencies";
+      let oldArr = currentApp[prop];
+      let newArr = [...oldArr, newValue];
+      if ( newValue !== undefined && newValue !== null && newValue !== "" ) {
+        currentApp[prop] = newArr;
+        this.setState({
+          currentApp,
+          dependencyModalDisplay: "none"
+        });
+      } 
+    }
+    if ( type === "assetDependency" ) {
+      prop = "asset_list";
+      let oldArr = currentApp[prop];
+      let newArr = [...oldArr, newValue];
+      if ( newValue !== undefined && newValue !== null && newValue !== "" ) {
+        currentApp[prop] = newArr;
+        this.setState({
+          currentApp,
+          assetModalDisplay: "none"
+        });
+      } 
+    }
+
+    return;
+  }
+
   setAppNames() {
     let allAssetNamesAndTypesLength = this.props.assetNamesAndTypes.length;
     let currentIndex = allAssetNamesAndTypesLength - 1;
@@ -224,6 +293,61 @@ class NewForm extends Component {
       assetTypes,
       assetTypeArray
     }, this.relateAssetTypes);
+  }
+
+  setAssetTypeOnChange(e) {
+    let assetType = e.target.value;
+    let assetTypes = this.state.assetTypes;
+    let keys = Object.keys(assetTypes);
+    let currentAsset = this.state.currentAsset;
+    let assetInteger;
+    keys.some(prop => {
+      if ( assetTypes[prop] === assetType ) {
+        assetInteger = Number(prop);
+      }
+    });
+    currentAsset.asset_type = assetInteger;
+    this.setState({
+      currentAssetType: assetType,
+      currentAsset
+    });
+  }
+
+  closeAssetModal() {
+    this.setState({
+      assetModalDisplay: "none"
+    });
+  }
+
+  closeDependencyModal() {
+    this.setState({
+      dependencyModalDisplay: "none"
+    });
+  }
+
+  getBladeInfo(type) {
+    let assetId = this.state.currentAsset.asset_id;
+    let len = this.props.assetNamesAndTypes.length - 1;
+    let current = this.props.assetNamesAndTypes[len][3].data;
+    let bladeData;
+
+    if ( current !== undefined ) {
+      current.some(blade => {
+        if ( assetId === blade.asset_id ) {
+          bladeData = blade;
+        }
+      });
+    }
+
+    if ( type === "chassis" && bladeData !== undefined ) {
+      return bladeData.chassis;
+    } else if ( type === "slot" && bladeData !== undefined ) {
+      return bladeData.chassis_slot_number;
+    } else if ( type === "parent" && bladeData !== undefined && bladeData.parent_asset_id !== undefined ) {
+      return bladeData.parent_asset_id;
+    } else {
+      return "";
+    }
   }
 
 
@@ -296,6 +420,7 @@ class NewForm extends Component {
                     <ListOptions
                       data={this.state.assetTypeArray}
                       defaultSelected={this.state.currentAssetType}
+                      OnClickHandler={this.setAssetTypeOnChange}
                     />
                   </div>
                 </div>
@@ -788,6 +913,57 @@ class NewForm extends Component {
               </div>
   
             </div>
+
+            <div className="row fourth-row">
+              <div className="blade-specific">
+                <h1>Blade Specific Fields</h1>
+              </div>
+            </div>
+  
+            <div className="row fourth-row">
+              <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_type">Chassis:</label>
+                  <div>
+                    <ListOptions
+                      data={this.state.chassis}
+                      //defaultSelected={this.state.bladeInfo.chassis}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="subnet">Chassis Slot#:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      //value={this.state.bladeInfo.chassis_slot_number}
+                      onChange={this.changeBladeInfo}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="row fourth-row">
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col" style={{margin: '0 auto'}}>
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="subnet">Parent Asset Id:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="subnet"
+                      value={this.getBladeInfo("parent")}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
   
             <div className="row fourth-row">
               <div className="col-lg-8 col-md-8 col-xs-12 app-env-col" style={{margin: '0 auto'}}>
@@ -898,7 +1074,7 @@ class NewForm extends Component {
           </div>
         );
       }
-      if ( this.state.formTypeSelected === true && this.state.formType === "App" ) {
+      if ( this.state.formTypeSelected === true && this.state.formType === "Application" ) {
         return (
           <div className="application-form-container">
           <header>
@@ -1036,7 +1212,7 @@ class NewForm extends Component {
                 labelText="Application Dependencies:"
                 selectID="select-dependencies"
                 selectSize="10"
-                listData={this.state.currentDependencies}
+                listData={this.state.currentApp.application_dependencies}
               />
               <div className="add-remove-container">
                 <i className="fas fa-plus" onClick={this.openDependencyModal}/>
@@ -1049,7 +1225,7 @@ class NewForm extends Component {
                 labelText="Asset List:"
                 selectID="select-asset-list"
                 selectSize="10"
-                listData={this.state.currentAssets}
+                listData={this.state.currentApp.asset_list}
               />
               <div className="add-remove-container">
                 <i className="fas fa-plus" onClick={this.openAssetModal}/>
@@ -1062,32 +1238,32 @@ class NewForm extends Component {
               <button type="button" onClick={this.submitForm} className="submit-button">Submit Form</button>
             </div>
           </div>
-          <ModalComponent 
+          <SelectModal 
             displayValue={{display: this.state.dependencyModalDisplay}}
-            labelValue="Provide a Dependency Name"
+            labelValue="Select An Application"
             className="add-modal"
-            inputId="dependency-input"
+            selectId="application-select"
             onClose={this.closeDependencyModal}
-            inputClassName="modal-input"
-            onChangeFunc={this.dependencyOnChange}
-            onSubmitFunc={this.addDependency}
-            stateValue={this.state.newDependency}
-            placeHolder="Dependency Name..."
-            submitText="Add Dependency"
+            modalSubmit={this.modalSubmitApp}
+            placeHolder="Application Name..."
+            submitText="Add Application"
+            listData={this.state.appNames}
+            closeId="closeapplicationsModalDisplay"
+            submitType="appDependency"
           />
-          <ModalComponent 
+          <SelectModal 
             displayValue={{display: this.state.assetModalDisplay}}
-            labelValue="Provide an Asset Name"
+            labelValue="Select An Asset"
             className="add-modal"
-            inputId="asset-input"
+            selectId="asset-input"
             onClose={this.closeAssetModal}
-            inputClassName="modal-input"
-            onChangeFunc={this.assetOnChange}
-            onSubmitFunc={this.addAsset}
-            stateValue={this.state.newAsset}
+            modalSubmit={this.modalSubmitApp}
             placeHolder="Asset Name..."
             submitText="Add Asset"
-          />            
+            listData={this.state.assetNames}
+            closeId="closestorageDependenciesModalDisplay"
+            submitType="assetDependency"
+          />                   
         </div>
         );
       }

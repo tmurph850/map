@@ -6,10 +6,14 @@ const SizedSelectField = (props) => {
 
   let listOptions;
 
-  if ( props.listData[0] !== undefined ) {
-      listOptions = props.listData[0].map((app) =>
-      <option value ="" key={uuidv1()}>{app}</option>
+  if ( props.listData[0] !== undefined && Array.isArray(props.listData[0]) ) {
+    listOptions = props.listData[0].map((app) =>
+      <option value ={app} key={uuidv1()}>{app}</option>
     );
+  } else if ( props.listData[0] !== undefined && Array.isArray(props.listData[0]) !== true ) {
+      listOptions = props.listData.map((app) =>
+        <option value ={app} key={uuidv1()}>{app}</option>
+      );
   } else {
     listOptions = [];
   }
