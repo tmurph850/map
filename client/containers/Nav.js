@@ -45,6 +45,9 @@ class Nav extends Component {
               <li className="nav-item">
                 <a className="nav-link" href="/asset-form">assets</a>
               </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/new-form">create</a>
+              </li>
             </ul>
           </div>
         </nav>

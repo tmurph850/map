@@ -32,7 +32,7 @@ SizedSelectField.propTypes = {
   selectID: PropTypes.string.isRequired,
   selectSize: PropTypes.string.isRequired,
   listData: PropTypes.array.isRequired,
-  openOnClick: PropTypes.func.isRequired
+  openOnClick: PropTypes.func
 };
 
 

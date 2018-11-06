@@ -9,7 +9,6 @@ import SelectApplication from '../components/ApplicationForm/SelectApplication';
 import { getData } from '../actions/getData';
 import { postData } from '../actions/postData';
 import ListOptions from '../components/ListOptions';
-import emptyAsset from '../common/assetObj';
 
 class AssetForm extends Component {
   constructor(props) {
@@ -51,8 +50,7 @@ class AssetForm extends Component {
         fireWallModalDisplay: "none"
       },
       userAuthCurrent: this.props.userAuth.length - 1,
-      sessionAuth: sessionStorage.getItem('isUserAuth'),
-      isNewForm: false
+      sessionAuth: sessionStorage.getItem('isUserAuth')
     };
 
     this.assetOnClick = this.assetOnClick.bind(this);
@@ -79,7 +77,7 @@ class AssetForm extends Component {
     }
 
     if ( prevProps.assetData.length !== this.props.assetData.length ) {
-      this.setCurrentAsset("selected");
+      this.setCurrentAsset();
       this.setOriginalState();
     }
   }
@@ -195,28 +193,18 @@ class AssetForm extends Component {
     });
   }
 
-  setCurrentAsset(setType) {
-    if ( setType === "selected" ) {
-      let dataLength = this.props.assetData.length - 1;
-      let currentAsset =  this.props.assetData[dataLength][0];
-      let serverDependencies = currentAsset.server_dependencies;
-      let theIndex = currentAsset.asset_type;
-      let assetType = this.state.assetTypes[theIndex];
-      this.setState({
-        currentAsset: currentAsset,
-        currentAssetType: assetType,
-        serverDependencies: serverDependencies,
-        assetSelected: true
-      });
-    } else {
-      this.setState({
-        currentAsset: emptyAsset,
-        currentAssetType: 1,
-        isNewForm: true,
-        serverDependencies: []
-      });
-    }
-    
+  setCurrentAsset() {
+    let dataLength = this.props.assetData.length - 1;
+    let currentAsset =  this.props.assetData[dataLength][0];
+    let serverDependencies = currentAsset.server_dependencies;
+    let theIndex = currentAsset.asset_type;
+    let assetType = this.state.assetTypes[theIndex];
+    this.setState({
+      currentAsset: currentAsset,
+      currentAssetType: assetType,
+      serverDependencies: serverDependencies,
+      assetSelected: true
+    });
   }
 
   setOriginalState() {
