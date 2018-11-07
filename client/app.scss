@@ -329,12 +329,13 @@ body {
   .sized-select {
     width: 88%;
     border-radius: 5px;
+    border: 1px solid #df532c;
   }
 
   .sized-select:focus {
     background: #e9562d !important;
     color: #fff;
-    border-color: #000;
+    border: 1px solid #000 !important;
   }
 
   .sized-group {

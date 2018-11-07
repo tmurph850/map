@@ -8,6 +8,7 @@ import { postData } from '../actions/postData';
 import SelectApplication from '../components/ApplicationForm/SelectApplication';
 import SizedSelectField from '../components/ApplicationForm/SizedSelectField';
 import ModalComponent from '../components/ModalComponent';
+import SelectModal from '../components/SelectModal';
 
 class ApplicationForm extends Component {
   constructor(props) {
@@ -52,15 +53,21 @@ class ApplicationForm extends Component {
     this.assetOnChange = this.assetOnChange.bind(this);
     this.addDependency = this.addDependency.bind(this);
     this.addAsset = this.addAsset.bind(this);
+    this.modalSubmit = this.modalSubmit.bind(this);
   }
 
   componentDidMount() {
     this.props.getData("get_app_names");
+    this.props.getData("get_asset_names_types");
   }
     
   componentDidUpdate(prevProps, prevState) {
     if ( prevProps.allApplicationNames.length !== this.props.allApplicationNames.length ) {
       this.setAppNames();
+    }
+
+    if ( prevProps.assetNamesAndTypes.length !== this.props.assetNamesAndTypes.length ) {
+      this.setAssetNames();
     }
 
     if ( prevProps.applicationData.length !== this.props.applicationData.length ) {
@@ -137,6 +144,18 @@ class ApplicationForm extends Component {
   setAppNames() {
     this.setState({
       appNames: this.props.allApplicationNames[0]
+    });
+  }
+
+  setAssetNames(){
+    let len = this.props.assetNamesAndTypes.length - 1;
+    let currentData = this.props.assetNamesAndTypes[len][0].data;
+    let assetNames = [];
+    currentData.forEach(asset => {
+      assetNames.push(asset.asset_name);
+    });
+    this.setState({
+      assetNames
     });
   }
 
@@ -371,13 +390,13 @@ class ApplicationForm extends Component {
   }
 
   addDependency() {
-    let currentDependencies = this.state.currentDependencies;
+    let currentApp = Object.assign({}, this.state.currentApp);
     let depUpdates = this.state.dependencyUpdates;
-    currentDependencies.push(this.state.newDependency);
+    currentApp.application_dependencies.push(this.state.newDependency);
     depUpdates.push(this.state.newDependency);
 
     this.setState({
-      currentDependencies: currentDependencies,
+      currentApp,
       dependencyUpdates: depUpdates,
       newDependency: "",
       dependencyModalDisplay: "none"
@@ -386,13 +405,16 @@ class ApplicationForm extends Component {
   }
 
   addAsset() {
-    let currentAssets = this.state.currentAssets;
+    let currentApp = Object.assign({}, this.state.currentApp);
     let assetUpdates = this.state.assetUpdates;
-    currentAssets.push(this.state.newAsset);
+    if ( currentApp.asset_list === null ) {
+      currentApp.asset_list = [];
+    }
+    currentApp.asset_list.push(this.state.newAsset);
     assetUpdates.push(this.state.newAsset);
 
     this.setState({
-      currentAssets: currentAssets,
+      currentApp: currentApp,
       assetUpdates: assetUpdates,
       newAsset: "",
       assetModalDisplay: "none"
@@ -421,6 +443,53 @@ class ApplicationForm extends Component {
     this.setState({
       newAsset: e.target.value
     });
+  }
+
+  modalSubmit(e, type, newValue) {
+    let prop;
+    let currentApp = this.state.currentApp;
+
+    if ( type === "assetList" ) {
+      prop = "asset_list";
+    }
+
+    if ( type === "appDependencies" ) {
+      prop = "application_dependencies";
+    }
+
+    if ( currentApp[prop] === null ) {
+      currentApp[prop] = [];
+    }
+
+    let oldArr = currentApp[prop];
+    let newArr = [...oldArr, newValue];
+
+    if ( newValue !== undefined && newValue !== null && newValue !== "" && type === "assetList" ) {
+      currentApp[prop] = newArr;
+      this.setState({
+        currentApp,
+        assetModalDisplay: "none"
+      });
+    } else {
+      currentApp[prop] = newArr;
+      this.setState({
+        currentApp,
+        dependencyModalDisplay: "none"
+      });
+    }
+
+    return;
+
+  }
+
+  removeAsset(e) {
+    let target = document.getElementById("select-asset-list");
+    console.log(target);
+  }
+
+  removeDependency(e) {
+    let target = document.getElementById("select-dependencies");
+    console.log(target);
   }
 
   render() {
@@ -462,7 +531,7 @@ class ApplicationForm extends Component {
                         className="form-control inputdefault"
                         id="application-id"
                         readOnly
-                        value={this.state.currentApp.application}
+                        value={this.state.currentApp.application_id}
                       />
                     </div>
                   </div>
@@ -583,12 +652,12 @@ class ApplicationForm extends Component {
                     labelText="Application Dependencies:"
                     selectID="select-dependencies"
                     selectSize="10"
-                    listData={this.state.currentDependencies}
+                    listData={this.state.currentApp.application_dependencies}
                     openOnClick={this.openOnClick}
                   />
                   <div className="add-remove-container">
                     <i className="fas fa-plus" onClick={this.openDependencyModal}/>
-                    <i className="fas fa-minus" />
+                    <i className="fas fa-minus" onClick={this.removeDependency}/>
                   </div> 
                 </div>
                 <div className="col-xl-6 col-lg-6 col-md-6 col-xs-12">
@@ -597,12 +666,12 @@ class ApplicationForm extends Component {
                     labelText="Asset List:"
                     selectID="select-asset-list"
                     selectSize="10"
-                    listData={this.state.currentAssets}
+                    listData={this.state.currentApp.asset_list}
                     openOnClick={this.openOnClick}
                   />
                   <div className="add-remove-container">
                     <i className="fas fa-plus" onClick={this.openAssetModal}/>
-                    <i className="fas fa-minus" />
+                    <i className="fas fa-minus" onClick={this.removeAsset}/>
                   </div>
                 </div>
               </div>
@@ -611,32 +680,32 @@ class ApplicationForm extends Component {
                   <button type="button" onClick={this.submitForm} className="submit-button">Submit Form</button>
                 </div>
               </div>
-              <ModalComponent 
+              <SelectModal 
                 displayValue={{display: this.state.dependencyModalDisplay}}
-                labelValue="Provide a Dependency Name"
+                labelValue="Provide an Application Name"
                 className="add-modal"
-                inputId="dependency-input"
+                selectId="asset-input"
                 onClose={this.closeDependencyModal}
-                inputClassName="modal-input"
-                onChangeFunc={this.dependencyOnChange}
-                onSubmitFunc={this.addDependency}
-                stateValue={this.state.newDependency}
-                placeHolder="Dependency Name..."
-                submitText="Add Dependency"
-              />
-              <ModalComponent 
+                modalSubmit={this.modalSubmit}
+                placeHolder="Application Name..."
+                submitText="Add Application"
+                listData={this.state.appNames}
+                closeId="closeApplicationModal"
+                submitType="appDependencies"
+              />                   
+              <SelectModal 
                 displayValue={{display: this.state.assetModalDisplay}}
                 labelValue="Provide an Asset Name"
                 className="add-modal"
-                inputId="asset-input"
+                selectId="asset-input"
                 onClose={this.closeAssetModal}
-                inputClassName="modal-input"
-                onChangeFunc={this.assetOnChange}
-                onSubmitFunc={this.addAsset}
-                stateValue={this.state.newAsset}
+                modalSubmit={this.modalSubmit}
                 placeHolder="Asset Name..."
                 submitText="Add Asset"
-              />            
+                listData={this.state.assetNames}
+                closeId="closeAssetModal"
+                submitType="assetList"
+              />                   
             </div>
           );
         } 
@@ -672,7 +741,8 @@ const mapStateToProps = (state) => {
     currentDependencies: state.currentDependencies,
     appFormResponse: state.appFormResponse,
     assetOrDepResponse: state.assetOrDepResponse,
-    userAuth: state.userAuth
+    userAuth: state.userAuth,
+    assetNamesAndTypes: state.assetNamesAndTypes
   };
 };
   
