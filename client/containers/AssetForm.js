@@ -10,6 +10,7 @@ import { getData } from '../actions/getData';
 import { postData } from '../actions/postData';
 import ListOptions from '../components/ListOptions';
 import chassisObj from '../common/chassisObj';
+import bladeObj from '../common//bladeObj';
 
 class AssetForm extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class AssetForm extends Component {
       assetSelected: false,
       originalAssetState: {},
       currentAsset: {},
+      bladeObj: bladeObj,
       chassisObj: chassisObj,
       currentAssetType: "",
       serverDependencies: [],
@@ -63,6 +65,7 @@ class AssetForm extends Component {
     this.modalSubmit = this.modalSubmit.bind(this);
     this.setAssetTypeOnChange = this.setAssetTypeOnChange.bind(this);
     this.chassisFieldOnChange = this.chassisFieldOnChange.bind(this);
+    this.bladeFieldOnChange = this.bladeFieldOnChange.bind(this);
     //this.chassisSlotFieldOnChange = this.chassisSlotFieldOnChange.bind(this);
   }
 
@@ -226,6 +229,9 @@ class AssetForm extends Component {
     let assetId = currentAsset.asset_id;
     let len = this.props.assetNamesAndTypes.length - 1;
     let currentChassisArr = this.props.assetNamesAndTypes[len][4].data;
+    let currentBladeArr = this.props.assetNamesAndTypes[len][3].data;
+    let bladeData;
+    let bladeRef;
     let chassisData;
     let chassisRef;
 
@@ -241,6 +247,22 @@ class AssetForm extends Component {
         currentAssetType: assetType,
         serverDependencies: serverDependencies,
         chassisObj: chassisRef,
+        bladeObj: bladeObj,
+        assetSelected: true
+      });
+    } else if ( currentAsset.asset_type === 8 && currentAsset.is_blade === true ) {
+      currentBladeArr.some(blade => {
+        if ( assetId === blade.asset_id ) {
+          bladeData = blade;
+        }
+      });
+      bladeRef = Object.assign({}, bladeData);
+      this.setState({
+        currentAsset: currentAsset,
+        currentAssetType: assetType,
+        serverDependencies: serverDependencies,
+        chassisObj: chassisObj,
+        bladeObj: bladeRef,
         assetSelected: true
       });
     } else {
@@ -249,6 +271,7 @@ class AssetForm extends Component {
         currentAssetType: assetType,
         serverDependencies: serverDependencies,
         chassisObj: chassisObj,
+        bladeObj: bladeObj,
         assetSelected: true
       });
     }
@@ -417,6 +440,18 @@ class AssetForm extends Component {
 
     this.setState({
       chassisObj: chassisStateObj
+    });
+  }
+
+  bladeFieldOnChange(e) {
+    let bladeStateObj = Object.assign({}, this.state.bladeObj);
+    let theId = e.target.id;
+    let newVal = e.target.value;
+
+    bladeStateObj[theId] = newVal;
+
+    this.setState({
+      bladeObj: bladeStateObj
     });
   }
 
@@ -1745,11 +1780,13 @@ class AssetForm extends Component {
               <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
   
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="asset_type">Chassis:</label>
+                  <label className="app-data-label" htmlFor="chassis">Chassis:</label>
                   <div>
                     <ListOptions
                       data={this.state.chassis}
-                      defaultSelected={this.state.currentAssetType}
+                      defaultSelected={this.state.bladeObj.chassis}
+                      OnClickHandler={this.bladeFieldOnChange}
+                      htmlId={"chassis"}
                     />
                   </div>
                 </div>
@@ -1761,9 +1798,9 @@ class AssetForm extends Component {
                   <div>
                     <input
                       className="form-control inputdefault"
-                      id="subnet"
-                      value={this.getBladeInfo("slot")}
-                      onChange={this.dynamicOnChange}
+                      id="chassis_slot_number"
+                      value={this.state.bladeObj.chassis_slot_number}
+                      onChange={this.bladeFieldOnChange}
                     />
                   </div>
                 </div>
@@ -1778,8 +1815,8 @@ class AssetForm extends Component {
                     <input
                       className="form-control inputdefault"
                       id="subnet"
-                      value={this.getBladeInfo("parent")}
-                      onChange={this.dynamicOnChange}
+                      value={this.state.bladeObj.parent_asset_id}
+                      readOnly
                     />
                   </div>
                 </div>
