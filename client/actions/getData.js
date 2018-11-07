@@ -29,7 +29,7 @@ export const getData = (requestType) => {
       if ( env === "dev" ) {
         correctUrl = getAppNamesDevUrl;
       } else {
-        correctUrl = getAppNamesProdUrl;
+        correctUrl = getAppNamesDevUrl;
       }
       break;
     case "get_asset_names":
@@ -37,7 +37,7 @@ export const getData = (requestType) => {
       if ( env === "dev" ) {
         correctUrl = getAssetNamesDevUrl;
       } else {
-        correctUrl = getAssetNamesProdUrl;
+        correctUrl = getAssetNamesDevUrl;
       }
       break;
     default:
@@ -49,7 +49,7 @@ export const getData = (requestType) => {
 
     const requestAssetNames = axios({
       method: "get",
-      url: getAssetNamesDevUrl,
+      url: getAssetNamesProdUrl,
       responseType: "json",
     });
 
