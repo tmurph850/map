@@ -54,6 +54,8 @@ class ApplicationForm extends Component {
     this.addDependency = this.addDependency.bind(this);
     this.addAsset = this.addAsset.bind(this);
     this.modalSubmit = this.modalSubmit.bind(this);
+    this.removeDependency = this.removeDependency.bind(this);
+    this.removeAsset = this.removeAsset.bind(this);
   }
 
   componentDidMount() {
@@ -483,13 +485,39 @@ class ApplicationForm extends Component {
   }
 
   removeAsset(e) {
+    let currentApp = Object.assign({}, this.state.currentApp);
+    let oldArr = currentApp.asset_list;
     let target = document.getElementById("select-asset-list");
-    console.log(target);
+    if ( target.selectedIndex === -1 ) {
+      return;
+    }
+    let selected = target.options[target.selectedIndex].innerHTML;
+    let targetIndex = oldArr.indexOf(selected);
+    oldArr.splice(targetIndex, 1);
+
+    currentApp.asset_list = oldArr;
+
+    this.setState({
+      currentApp
+    });
   }
 
   removeDependency(e) {
+    let currentApp = Object.assign({}, this.state.currentApp);
+    let oldArr = currentApp.application_dependencies;
     let target = document.getElementById("select-dependencies");
-    console.log(target);
+    if ( target.selectedIndex === -1 ) {
+      return;
+    }
+    let selected = target.options[target.selectedIndex].innerHTML;
+    let targetIndex = oldArr.indexOf(selected);
+    oldArr.splice(targetIndex, 1);
+
+    currentApp.application_dependencies = oldArr;
+
+    this.setState({
+      currentApp
+    });
   }
 
   render() {
