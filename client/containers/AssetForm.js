@@ -66,6 +66,7 @@ class AssetForm extends Component {
     this.setAssetTypeOnChange = this.setAssetTypeOnChange.bind(this);
     this.chassisFieldOnChange = this.chassisFieldOnChange.bind(this);
     this.bladeFieldOnChange = this.bladeFieldOnChange.bind(this);
+    this.removeDependency = this.removeDependency.bind(this);
     //this.chassisSlotFieldOnChange = this.chassisSlotFieldOnChange.bind(this);
   }
 
@@ -526,6 +527,57 @@ class AssetForm extends Component {
     let theIndex = this.state.currentAsset.asset_type;
     let assetType = assetTypes[theIndex];
     return assetType;
+  }
+
+  removeDependency(e) {
+    let currentAsset = Object.assign({}, this.state.currentAsset);
+    let target = e.target.id;
+    let lastIndexOf_ = target.lastIndexOf("_");
+    let prop = target.slice(0, lastIndexOf_);
+    let oldArr = currentAsset[prop];
+    let selectTarget;
+    
+    switch (target) {
+      case "storage_dependencies_i":
+        selectTarget = document.getElementById("storage_dependencies");
+        break;
+      case "applications_i":
+        selectTarget = document.getElementById("select-applications-list");
+        break;
+      case "db_asset_dependencies_i":
+        selectTarget = document.getElementById("db_asset_dependencies");
+        break;
+      case "network_dependencies_i":
+        selectTarget = document.getElementById("network_dependencies");
+        break;
+      case "fileshare_dependencies_i":
+        selectTarget = document.getElementById("fileshare_dependencies");
+        break;
+      case "cluster_nodes_i":
+        selectTarget = document.getElementById("cluster_nodes");
+        break;
+      case "firewall_i":
+        selectTarget = document.getElementById("firewall");
+        break;
+      default:
+        break;
+    }
+
+    if ( selectTarget.selectedIndex === - 1 ) {
+      return;
+    }
+
+    let selected = selectTarget.options[selectTarget.selectedIndex].innerHTML;
+    let targetIndex = oldArr.indexOf(selected);
+    oldArr.splice(targetIndex, 1);
+
+    currentAsset[prop] = oldArr;
+
+    this.setState({
+      currentAsset
+    });
+
+
   }
 
   render() {
@@ -997,7 +1049,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="storageDependenciesModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="storage_dependencies_i" onClick={this.removeDependency}/>
                 </div>
               </div>
   
@@ -1016,7 +1068,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="dbAssetDependModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="db_asset_dependencies_i" onClick={this.removeDependency}/>
                 </div>
               </div>
              <div className="col-lg-6 col-md-6 col-xs-12">
@@ -1030,7 +1082,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="networkDependModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="network_dependencies_i" onClick={this.removeDependency}/>
                 </div>
               </div>
   
@@ -1049,7 +1101,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="fileShareDependModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="fileshare_dependencies_i" onClick={this.removeDependency}/>
                 </div>
               </div>
               <div className="col-lg-6 col-md-6 col-xs-12">
@@ -1063,7 +1115,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="clusterNodesModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="cluster_nodes_i" onClick={this.removeDependency}/>
                 </div>
               </div>
   
@@ -1081,7 +1133,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="applicationsModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="applications_i" onClick={this.removeDependency}/>
                 </div>
               </div>
               <div className="col-lg-6 col-md-6 col-xs-12">
@@ -1095,7 +1147,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="fireWallModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="firewall_i" onClick={this.removeDependency}/>
                 </div>
               </div>
   
@@ -1666,7 +1718,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="storageDependenciesModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="storage_dependencies_i" onClick={this.removeDependency}/>
                 </div>
               </div>
   
@@ -1685,7 +1737,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="dbAssetDependModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="db_asset_dependencies_i" onClick={this.removeDependency}/>
                 </div>
               </div>
              <div className="col-lg-6 col-md-6 col-xs-12">
@@ -1699,7 +1751,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="networkDependModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="network_dependencies_i" onClick={this.removeDependency}/>
                 </div>
               </div>
   
@@ -1718,7 +1770,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="fileShareDependModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="fileshare_dependencies_i" onClick={this.removeDependency}/>
                 </div>
               </div>
               <div className="col-lg-6 col-md-6 col-xs-12">
@@ -1732,7 +1784,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="clusterNodesModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="cluster_nodes_i" onClick={this.removeDependency}/>
                 </div>
               </div>
   
@@ -1750,7 +1802,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="applicationsModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="applications_i" onClick={this.removeDependency}/>
                 </div>
               </div>
               <div className="col-lg-6 col-md-6 col-xs-12">
@@ -1764,7 +1816,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="fireWallModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="firewall_i" onClick={this.removeDependency}/>
                 </div>
               </div>
   
@@ -2385,7 +2437,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="storageDependenciesModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="storage_dependencies_i" onClick={this.removeDependency}/>
                 </div>
               </div>
   
@@ -2404,7 +2456,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="dbAssetDependModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="db_asset_dependencies_i" onClick={this.removeDependency}/>
                 </div>
               </div>
              <div className="col-lg-6 col-md-6 col-xs-12">
@@ -2418,7 +2470,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="networkDependModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="network_dependencies_i" onClick={this.removeDependency}/>
                 </div>
               </div>
   
@@ -2437,7 +2489,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="fileShareDependModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="fileshare_dependencies_i" onClick={this.removeDependency}/>
                 </div>
               </div>
               <div className="col-lg-6 col-md-6 col-xs-12">
@@ -2451,7 +2503,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="clusterNodesModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="cluster_nodes_i" onClick={this.removeDependency}/>
                 </div>
               </div>
   
@@ -2469,7 +2521,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="applicationsModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="applications_i" onClick={this.removeDependency}/>
                 </div>
               </div>
               <div className="col-lg-6 col-md-6 col-xs-12">
@@ -2483,7 +2535,7 @@ class AssetForm extends Component {
                 />
                 <div className="add-remove-container">
                   <i className="fas fa-plus" id="fireWallModalDisplay" onClick={this.openModalOnClick}/>
-                  <i className="fas fa-minus" />
+                  <i className="fas fa-minus" id="firewall_i" onClick={this.removeDependency}/>
                 </div>
               </div>
   
