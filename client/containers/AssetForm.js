@@ -72,6 +72,7 @@ class AssetForm extends Component {
     this.chassisFieldOnChange = this.chassisFieldOnChange.bind(this);
     this.bladeFieldOnChange = this.bladeFieldOnChange.bind(this);
     this.removeDependency = this.removeDependency.bind(this);
+    this.submitForm = this.submitForm.bind(this);
     //this.chassisSlotFieldOnChange = this.chassisSlotFieldOnChange.bind(this);
   }
 
@@ -92,7 +93,7 @@ class AssetForm extends Component {
 
     if ( prevProps.assetData.length !== this.props.assetData.length ) {
       this.setCurrentAsset();
-      this.setOriginalState();
+      //this.setOriginalState();
     }
   }
 
@@ -101,8 +102,8 @@ class AssetForm extends Component {
   }
 
   compareState() {
-    let currentState = this.state.currentAsset;
-    let originalAssetState = this.state.originalAssetState;
+    let currentState = Object.assign({}, this.state.currentAsset);
+    let originalAssetState = Object.assign({}, this.state.originalAssetState);
     let bladeCurrent;
     let bladeOriginal;
     let chassisCurrent;
@@ -124,7 +125,7 @@ class AssetForm extends Component {
         let oldArr = originalAssetState[prop];
         
         for (let i = 0; i < newArr.length; i++ ) {
-          if ( newArr[i] !== oldArr[i] ) {
+          if ( newArr[i] !== oldArr[i] || newArr.length !== oldArr.length ) {
             changes.newData[prop] = currentState[prop];
             changes.numberOfFields = changes.numberOfFields + 1;
             changes.isNewData = true;
@@ -134,13 +135,37 @@ class AssetForm extends Component {
         if ( currentState[prop] !== originalAssetState[prop] ) {
           changes[prop] = currentState[prop];
           changes.numberOfFields = changes.numberOfFields + 1;
-          changes.newData = true;
+          changes.isNewData = true;
         }
       }
     }
 
     if ( this.state.currentAsset.is_blade === true ) {
+      bladeOriginal = this.state.bladeOriginal;
+      bladeCurrent = this.state.bladeObj;
 
+      for (const prop in bladeCurrent) {
+        if ( bladeCurrent[prop] !== bladeOriginal[prop] ) {
+          changes.bladeData = {};
+          changes.bladeData[prop] = bladeCurrent[prop];
+          changes.numberOfFields = changes.numberOfFields + 1;
+          changes.isBladeData = true;
+        }
+      }
+    }
+
+    if ( this.state.currentAsset.is_chassis === true ) {
+      chassisOriginal = this.state.chassisOriginal;
+      chassisCurrent = this.state.chassisObj;
+
+      for (const prop in chassisCurrent) {
+        if ( chassisCurrent[prop] !== chassisOriginal[prop] ) {
+          changes.chassisData = {};
+          changes.chassisData[prop] = chassisCurrent[prop];
+          changes.numberOfFields = changes.numberOfFields + 1;
+          changes.isChassisData = true;
+        }
+      }
     }
 
     return changes;
@@ -284,7 +309,7 @@ class AssetForm extends Component {
         chassisObj: chassisRef,
         bladeObj: bladeObj,
         assetSelected: true
-      });
+      }, this.setOriginalState);
     } else if ( currentAsset.asset_type === 8 && currentAsset.is_blade === true ) {
       currentBladeArr.some(blade => {
         if ( assetId === blade.asset_id ) {
@@ -299,7 +324,7 @@ class AssetForm extends Component {
         chassisObj: chassisObj,
         bladeObj: bladeRef,
         assetSelected: true
-      });
+      }, this.setOriginalState);
     } else {
       this.setState({
         currentAsset: currentAsset,
@@ -308,7 +333,7 @@ class AssetForm extends Component {
         chassisObj: chassisObj,
         bladeObj: bladeObj,
         assetSelected: true
-      });
+      }, this.setOriginalState);
     }
       
   }
@@ -316,7 +341,8 @@ class AssetForm extends Component {
   setOriginalState() {
     let len = this.props.assetData.length - 1;
     let otherLen = this.props.assetNamesAndTypes.length - 1;
-    let originalAssetState = Object.assign({}, this.props.assetData[len][0]);
+    //let originalAssetState = Object.assign({}, this.props.assetData[len][0]);
+    let originalAssetState = Object.assign({}, this.state.currentAsset);
     let bladeOriginal;
     let chassisOriginal;
 
@@ -339,7 +365,7 @@ class AssetForm extends Component {
 
       chassis.some(chas => {
         if ( originalAssetState.asset_id === chas.asset_id ) {
-          bladeOriginal = Object.assign({}, chas);
+          chassisOriginal = Object.assign({}, chas);
         }
       });
 
@@ -607,6 +633,7 @@ class AssetForm extends Component {
     let lastIndexOf_ = target.lastIndexOf("_");
     let prop = target.slice(0, lastIndexOf_);
     let oldArr = currentAsset[prop];
+    let newArr = [...oldArr]; //creates copy so state does not get mixed up
     let selectTarget;
     
     switch (target) {
@@ -641,9 +668,9 @@ class AssetForm extends Component {
 
     let selected = selectTarget.options[selectTarget.selectedIndex].innerHTML;
     let targetIndex = oldArr.indexOf(selected);
-    oldArr.splice(targetIndex, 1);
+    newArr.splice(targetIndex, 1);
 
-    currentAsset[prop] = oldArr;
+    currentAsset[prop] = newArr;
 
     this.setState({
       currentAsset
@@ -652,6 +679,27 @@ class AssetForm extends Component {
   }
 
   submitForm() {
+    let updateObj = this.compareState();
+    let requestNum = this.state.requestNumber + 1;
+    let submitRequested = false;
+
+    if ( updateObj.numberOfFields !== 0 ) {
+      let formData = updateObj;
+      delete formData.numberOfFields;
+      formData.assetId = this.state.currentAsset.asset_id;
+      formData.assetName = this.state.currentAsset.asset_name;
+      formData.assetType = this.state.currentAsset.asset_type;
+      formData.requestNumber = requestNum;
+      this.props.postData(formData, "post_asset_form");
+      submitRequested = true;
+
+      this.setState({
+        submitRequested,
+        showLoading: true,
+        requestNumber: this.state.requestNumber + 1,
+      });
+
+    }
 
   }
 
@@ -3044,7 +3092,8 @@ const mapStateToProps = (state) => {
     allAssetNames: state.allAssetNames,
     assetData: state.assetData,
     assetNamesAndTypes: state.assetNamesAndTypes,
-    userAuth: state.userAuth
+    userAuth: state.userAuth,
+    assetFormResponse: state.assetFormResponse
   };
 };
   

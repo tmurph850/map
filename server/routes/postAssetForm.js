@@ -3,6 +3,7 @@ const db = require('../db/index');
 const postAssetForm = (req, res) => {
   console.log("Initiating request to post asset form data");
   let formData = req.body.postData;
+  console.log(formData);
   let requestNumber = formData.requestNumber;
   let columns = '';
   let text = '';

@@ -6,6 +6,7 @@ const getAssetData = require('./getAssetData');
 const getCurrentAssets = require('./getCurrentAssets');
 const getCurrentDependencies = require('./getCurrentDependencies');
 const postAppForm = require('./postAppForm');
+const postAssetForm = require('./postAssetForm');
 const postAssetOrDep = require('./postAssetOrDep');
 const getAssetTypes = require('./getAssetTypes');
 const getBlades = require('./getBlades');
@@ -24,6 +25,7 @@ module.exports = (app) => {
   app.post('/getCurrentAssets', getCurrentAssets);
   app.post('/getCurrentDependencies', getCurrentDependencies);
   app.post('/postAppForm', postAppForm);
+  app.post('/postAssetForm', postAssetForm);
   app.post('/postAssetOrDep', postAssetOrDep);
   app.post('/login', newLogin);
 };

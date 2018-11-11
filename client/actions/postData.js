@@ -5,6 +5,7 @@ import {
   GET_CURRENT_DEPENDENCIES,
   GET_ASSET_DATA,
   POST_APP_FORM,
+  POST_ASSET_FORM,
   POST_ASSET_OR_DEP
 } from './actionTypes';
 
@@ -18,6 +19,8 @@ const getCurrentDependenciesDevUrl = 'http://localhost:3000/getCurrentDependenci
 const getCurrentDependenciesProdUrl = 'http://ec2-18-214-185-132.compute-1.amazonaws.com:3000/getCurrentDependencies';
 const postAppFormDevUrl = 'http://localhost:3000/postAppForm';
 const postAppFormProdUrl = 'http://ec2-18-214-185-132.compute-1.amazonaws.com:3000/postAppForm';
+const postAssetFormDevUrl = 'http://localhost:3000/postAssetForm';
+const postAssetFormProdUrl = 'http://ec2-18-214-185-132.compute-1.amazonaws.com:3000/postAssetForm';
 const postAssetOrDepDevUrl = 'http://localhost:3000/postAssetOrDep';
 const postAssetOrDepProdUrl = 'http://ec2-18-214-185-132.compute-1.amazonaws.com:3000/postAssetOrDep';
 
@@ -66,6 +69,14 @@ export const postData = (postData, postType) => {
         correctUrl = postAppFormDevUrl;
       } else {
         correctUrl = postAppFormProdUrl;
+      }
+      break;
+    case "post_asset_form":
+      actionType = POST_ASSET_FORM;
+      if ( env === "dev" ) {
+        correctUrl = postAssetFormDevUrl;
+      } else {
+        correctUrl = postAssetFormProdUrl;
       }
       break;
     case "post_asset_or_dep":
