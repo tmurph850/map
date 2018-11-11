@@ -25,6 +25,8 @@ class AssetForm extends Component {
       assetSelected: false,
       originalAssetState: {},
       currentAsset: {},
+      bladeOriginal: {},
+      chassisOriginal: {},
       bladeObj: bladeObj,
       chassisObj: chassisObj,
       currentAssetType: "",
@@ -54,7 +56,10 @@ class AssetForm extends Component {
         fireWallModalDisplay: "none"
       },
       userAuthCurrent: this.props.userAuth.length - 1,
-      sessionAuth: sessionStorage.getItem('isUserAuth')
+      sessionAuth: sessionStorage.getItem('isUserAuth'),
+      preppedData: {},
+      submitRequested: false,
+      requestNumber: 0
     };
 
     this.assetOnClick = this.assetOnClick.bind(this);
@@ -98,15 +103,44 @@ class AssetForm extends Component {
   compareState() {
     let currentState = this.state.currentAsset;
     let originalAssetState = this.state.originalAssetState;
+    let bladeCurrent;
+    let bladeOriginal;
+    let chassisCurrent;
+    let chassisOriginal;
+
     let changes = {
-      numberOfFields: 0
+      numberOfFields: 0,
+      newData: {},
+      isNewData: false,
+      isBladeData: false,
+      isChassisData: false
     };
 
+
+
     for (const prop in currentState) {
-      if ( currentState[prop] !== originalAssetState[prop] ) {
-        changes[prop] = currentState[prop];
-        changes.numberOfFields = changes.numberOfFields + 1;
+      if ( Array.isArray(currentState[prop]) ) {
+        let newArr = currentState[prop];
+        let oldArr = originalAssetState[prop];
+        
+        for (let i = 0; i < newArr.length; i++ ) {
+          if ( newArr[i] !== oldArr[i] ) {
+            changes.newData[prop] = currentState[prop];
+            changes.numberOfFields = changes.numberOfFields + 1;
+            changes.isNewData = true;
+          }
+        }
+      } else {
+        if ( currentState[prop] !== originalAssetState[prop] ) {
+          changes[prop] = currentState[prop];
+          changes.numberOfFields = changes.numberOfFields + 1;
+          changes.newData = true;
+        }
       }
+    }
+
+    if ( this.state.currentAsset.is_blade === true ) {
+
     }
 
     return changes;
@@ -280,10 +314,48 @@ class AssetForm extends Component {
   }
 
   setOriginalState() {
-    let originalAssetState = Object.assign({}, this.props.assetData[0][0]);
-    this.setState({
-      originalAssetState
-    });
+    let len = this.props.assetData.length - 1;
+    let otherLen = this.props.assetNamesAndTypes.length - 1;
+    let originalAssetState = Object.assign({}, this.props.assetData[len][0]);
+    let bladeOriginal;
+    let chassisOriginal;
+
+    if ( originalAssetState.is_blade ) {
+      let blades = this.props.assetNamesAndTypes[otherLen][3].data;
+
+      blades.some(blade => {
+        if ( originalAssetState.asset_id === blade.asset_id ) {
+          bladeOriginal = Object.assign({}, blade);
+        }
+      });
+
+      this.setState({
+        originalAssetState,
+        bladeOriginal
+      });
+
+    } else if ( originalAssetState.is_chassis ) {
+      let chassis = this.props.assetNamesAndTypes[otherLen][4].data;
+
+      chassis.some(chas => {
+        if ( originalAssetState.asset_id === chas.asset_id ) {
+          bladeOriginal = Object.assign({}, chas);
+        }
+      });
+
+      this.setState({
+        originalAssetState,
+        chassisOriginal
+      });
+
+    } else {
+
+      this.setState({
+        originalAssetState
+      });
+
+    }
+
   }
 
   assetOnClick(e) {
@@ -577,6 +649,9 @@ class AssetForm extends Component {
       currentAsset
     });
 
+  }
+
+  submitForm() {
 
   }
 

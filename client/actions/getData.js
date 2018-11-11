@@ -27,7 +27,7 @@ export const getData = (requestType) => {
     case "get_app_names":
       actionType = GET_ALL_APPLICATION_NAMES;
       if ( env === "dev" ) {
-        correctUrl = getAppNamesProdUrl;
+        correctUrl = getAppNamesDevUrl;
       } else {
         correctUrl = getAppNamesProdUrl;
       }

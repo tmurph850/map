@@ -30,7 +30,7 @@ const postAppForm = (req, res) => {
       }
       i++;
     });
-    text = 'UPDATE application_table SET ' + columns + ' WHERE application = $1';
+    text = 'UPDATE application_table SET ' + columns + ' WHERE application_id = $1';
   };
 
   buildQuery();
