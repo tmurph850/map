@@ -1279,8 +1279,8 @@ class AssetForm extends Component {
             <div className="row fourth-row">
               <div className="col-lg-8 col-md-8 col-xs-12 app-env-col" style={{margin: '0 auto'}}>
                 <div className="form-group">
-                  <label className="notes-label app-data-label" htmlFor="notes-field">Notes:</label>
-                  <textarea className="form-control" id="notes-field" rows="8" defaultValue={this.state.currentAsset.notes}  onChange={this.state.notesOnChange}/>
+                  <label className="notes-label app-data-label" htmlFor="notes">Notes:</label>
+                  <textarea className="form-control" id="notes" rows="8" defaultValue={this.state.currentAsset.notes}  onChange={this.dynamicOnChange}/>
                 </div>
               </div>
             </div>
@@ -2001,8 +2001,8 @@ class AssetForm extends Component {
             <div className="row fourth-row">
               <div className="col-lg-8 col-md-8 col-xs-12 app-env-col" style={{margin: '0 auto'}}>
                 <div className="form-group">
-                  <label className="notes-label app-data-label" htmlFor="notes-field">Notes:</label>
-                  <textarea className="form-control" id="notes-field" rows="8" defaultValue={this.state.currentAsset.notes}  onChange={this.state.notesOnChange}/>
+                  <label className="notes-label app-data-label" htmlFor="notes">Notes:</label>
+                  <textarea className="form-control" id="notes" rows="8" defaultValue={this.state.currentAsset.notes}  onChange={this.dynamicOnChange}/>
                 </div>
               </div>
             </div>
@@ -2960,8 +2960,8 @@ class AssetForm extends Component {
             <div className="row fourth-row">
               <div className="col-lg-8 col-md-8 col-xs-12 app-env-col" style={{margin: '0 auto'}}>
                 <div className="form-group">
-                  <label className="notes-label app-data-label" htmlFor="notes-field">Notes:</label>
-                  <textarea className="form-control" id="notes-field" rows="8" defaultValue={this.state.currentAsset.notes}  onChange={this.state.notesOnChange}/>
+                  <label className="notes-label app-data-label" htmlFor="notes">Notes:</label>
+                  <textarea className="form-control" id="notes" rows="8" defaultValue={this.state.currentAsset.notes}  onChange={this.dynamicOnChange}/>
                 </div>
               </div>
             </div>
