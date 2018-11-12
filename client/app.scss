@@ -99,6 +99,7 @@ body {
         color: #fff;
         border-radius: 5px;
         height: 36px;
+        margin-top: 35px;
       }
     }
 
@@ -471,6 +472,19 @@ body {
     width: 100%;
   }
 
+
+}
+
+#asset-input {
+  margin-top: 40px;
+  //background: #2a2f3f;
+  background: #fff;
+  //color: white;
+  border-color: #2a2f3f;
+}
+
+#asset-input:focus {
+  background: #e9562d;
 }
 /**
   End Signup Styles

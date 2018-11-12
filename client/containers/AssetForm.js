@@ -1321,7 +1321,7 @@ class AssetForm extends Component {
               displayValue={{display: this.state.modalDisplay.applicationsModalDisplay}}
               labelValue="Select An Application"
               className="add-modal"
-              selectId="application-select"
+              selectId="asset-input"
               onClose={this.closeModalOnClick}
               modalSubmit={this.modalSubmit}
               placeHolder="Application Name..."
@@ -2043,7 +2043,7 @@ class AssetForm extends Component {
               displayValue={{display: this.state.modalDisplay.applicationsModalDisplay}}
               labelValue="Select An Application"
               className="add-modal"
-              selectId="application-select"
+              selectId="asset-input"
               onClose={this.closeModalOnClick}
               modalSubmit={this.modalSubmit}
               placeHolder="Application Name..."
@@ -3002,7 +3002,7 @@ class AssetForm extends Component {
               displayValue={{display: this.state.modalDisplay.applicationsModalDisplay}}
               labelValue="Select An Application"
               className="add-modal"
-              selectId="application-select"
+              selectId="asset-input"
               onClose={this.closeModalOnClick}
               modalSubmit={this.modalSubmit}
               placeHolder="Application Name..."
