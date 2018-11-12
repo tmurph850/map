@@ -133,7 +133,7 @@ class AssetForm extends Component {
         }
       } else {
         if ( currentState[prop] !== originalAssetState[prop] ) {
-          changes[prop] = currentState[prop];
+          changes.newData[prop] = currentState[prop];
           changes.numberOfFields = changes.numberOfFields + 1;
           changes.isNewData = true;
         }

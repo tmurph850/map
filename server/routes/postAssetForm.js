@@ -2,17 +2,36 @@ const db = require('../db/index');
 
 const postAssetForm = (req, res) => {
   console.log("Initiating request to post asset form data");
-  let formData = req.body.postData;
+  let formData = req.body.postData.newData;
+  let otherData = req.body.postData;
   console.log(formData);
-  let requestNumber = formData.requestNumber;
+  let requestNumber = req.body.postData.requestNumber;
   let columns = '';
   let text = '';
   let values = [];
 
-  values.push(formData.assetId);
+  values.push(otherData.assetId);
 
-  const buildQuery = () => {
-    let copy = Object.assign({}, formData);
+  const query = (text, values) => {
+    return new Promise((resolve, reject) => {
+      db.query(text, values, (err, response) => {
+        if (err) {
+          console.log("Query rejected");
+          reject({
+              error: err,
+              responseCode: 400
+            });
+        } else {
+          console.log("Query resolved");
+          resolve(response);
+        }
+      });
+    });
+  };
+
+  const buildQuery = (dataObj) => {
+    columns = '';
+    let copy = Object.assign({}, dataObj);
     delete copy.assetId;
     delete copy.assetName;
     delete copy.requestNumber;
@@ -23,8 +42,8 @@ const postAssetForm = (req, res) => {
     propArray.forEach((prop) => {
       if ( prop !== "assetId" && prop !== "assetName" && prop !== "assetNumber" && i < propLen ) {
         if ( Array.isArray(copy[prop]) ) {
-          let newStr = copy[prop].toString();
-          let newValue = `{${newStr}}`;
+          let newStr = copy[prop].join(', ');
+          let newValue = '{' + newStr + '}';
           columns = columns + prop + ' = ' + '$' + (i+1) + ', ';
           values.push(newValue);
         } else {
@@ -35,9 +54,10 @@ const postAssetForm = (req, res) => {
       }
       if ( prop !== "assetId" && prop !== "assetName" && prop !== "requestNumber" && i === propLen ) {
         if ( Array.isArray(copy[prop]) ) {
-          let newStr = copy[prop].toString();
-          let newValue = `{${newStr}}`;
-          columns = columns + prop + ' = ' + '$' + (i+1) + ', ';
+          let newStr = copy[prop].join(', ');
+          let newValue = '{' + newStr + '}';
+          columns = columns + prop + ' = ' + '$' + (i+1);
+          //values.push(newValue);
           values.push(newValue);
         } else {
           columns = columns + prop + ' = ' + '$' + (i+1);
@@ -46,12 +66,12 @@ const postAssetForm = (req, res) => {
       }
       i++;
     });
-    text = 'UPDATE asset_table SET ' + columns + ' WHERE asset_id = $1';
+    text = 'UPDATE asset_table SET ' + columns + 'WHERE asset_id = $1';
   };
 
-  buildQuery();
+  buildQuery(formData);
   
-  db.query(text, values, (err, response) => {
+  query(text, values, (err, response) => {
     if (err) {
       res.send({
         error: "There was an error posting form data to the db.",
