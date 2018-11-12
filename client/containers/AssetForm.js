@@ -112,6 +112,7 @@ class AssetForm extends Component {
     let changes = {
       numberOfFields: 0,
       newData: {},
+      arrayUpdates: [],
       isNewData: false,
       isBladeData: false,
       isChassisData: false
@@ -123,12 +124,37 @@ class AssetForm extends Component {
       if ( Array.isArray(currentState[prop]) ) {
         let newArr = currentState[prop];
         let oldArr = originalAssetState[prop];
+        let len;
+
+        if ( newArr.length > oldArr.length ) {
+          len = newArr.length;
+        } else {
+          len = oldArr.length;
+        }
         
-        for (let i = 0; i < newArr.length; i++ ) {
+        for (let i = 0; i < len; i++ ) {
           if ( newArr[i] !== oldArr[i] || newArr.length !== oldArr.length ) {
             changes.newData[prop] = currentState[prop];
             changes.numberOfFields = changes.numberOfFields + 1;
             changes.isNewData = true;
+            if ( oldArr.includes(newArr[i]) !== true && newArr[i] !== undefined ) {
+              changes.arrayUpdates.push({
+                asset_name: newArr[i],
+                dependencyType: this.state.currentAsset.asset_type,
+                dependencyName: this.state.currentAsset.asset_name,
+                added: true,
+                removed: false
+              });
+            }
+            if ( newArr.includes(oldArr[i]) !== true && oldArr[i] !== undefined ) {
+              changes.arrayUpdates.push({
+                asset_name: oldArr[i],
+                dependencyType: this.state.currentAsset.asset_type,
+                dependencyName: this.state.currentAsset.asset_name,
+                added: false,
+                removed: true
+              });
+            }
           }
         }
       } else {

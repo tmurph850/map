@@ -31,6 +31,8 @@ const postAssetForm = (req, res) => {
 
   const buildQuery = (dataObj) => {
     columns = '';
+    text = '';
+    values = [otherData.assetId];
     let copy = Object.assign({}, dataObj);
     delete copy.assetId;
     delete copy.assetName;
@@ -71,23 +73,21 @@ const postAssetForm = (req, res) => {
 
   buildQuery(formData);
   
-  query(text, values, (err, response) => {
-    if (err) {
-      res.send({
-        error: "There was an error posting form data to the db.",
-        responseCode: 400,
-        requestNumber: requestNumber,
-        success: false
-      });
-    } else {
-      console.log("Request successful!");
-      res.send({
-        success: true,
-        status: 200,
-        requestNumber: requestNumber
-      });
-    }
+  query(text, values).then(response => {
+    console.log("Request successful!");
+    res.send({
+      success: true,
+      status: 200,
+      requestNumber: requestNumber
+    });
    // db.end();
+  }).catch(err => {
+    res.send({
+      error: err,
+      responseCode: 400,
+      requestNumber: requestNumber,
+      success: false
+    });
   });
 };
 
