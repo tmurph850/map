@@ -50,6 +50,7 @@ const postAssetForm = (req, res) => {
     let depType = dependencyTypes[dataObj.dependencyType];
     let dependencyName = dataObj.dependencyName;
     let dbColumn = '';
+    console.log(oldValues);
 
     switch (depType) {
       case 'server':
@@ -69,10 +70,13 @@ const postAssetForm = (req, res) => {
         break;
     }
 
-    values.push(dbColumn, dependencyName);
+    let newArr = oldValues[dbColumn];
+    newArr.push(dependencyName);
+    let newVal = '{' + newArr.toString() + '}';
+
+    values.push(newVal);
     
-    text = 'UPDATE asset_table SET $2 = array_append($2, $3) WHERE asset_name = $1';
-    console.log(text);
+    text = 'UPDATE asset_table SET ' + dbColumn + ' = $2 WHERE asset_name = $1';
   };
 
   const buildQuery = (dataObj) => {
@@ -183,8 +187,8 @@ const postAssetForm = (req, res) => {
     arrayUpdates.forEach(update => {
       let oldVals;
       getOldVal(update).then(response => {
-      oldVals = response;
-      buildArrayQuery(update);
+      oldVals = response.rows[0];
+      buildArrayQuery(update, oldVals);
       obj["query" + i] = query(text, values);
       arr.push(obj["query" + i]);
       });
