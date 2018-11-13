@@ -67,11 +67,17 @@ const postAssetForm = (req, res) => {
         dbColumn = 'firewall';
         break;
       default:
-        break;
+        dbColumn = 'storage_dependencies';
     }
 
     let newArr = oldValues[dbColumn];
-    newArr.push(dependencyName);
+    if ( dataObj.added === true ) {
+      newArr.push(dependencyName);
+    }
+    if ( dataObj.removed === true ) {
+      let indexOf = newArr.indexOf(dependencyName);
+      newArr.splice(indexOf, 1);
+    }
     let newVal = '{' + newArr.toString() + '}';
 
     values.push(newVal);
@@ -138,6 +144,7 @@ const postAssetForm = (req, res) => {
         dbColumn = 'firewall';
         break;
       default:
+        dbColumn = 'storage_dependencies';
         break;
     }
 
@@ -193,6 +200,10 @@ const postAssetForm = (req, res) => {
       arr.push(obj["query" + i]);
       });
     });
+
+    buildQuery(formData);
+    let mainQuery = query(text, values);
+    arr.push(mainQuery);
 
     queryAll(arr).then(response => {
       console.log(response);
