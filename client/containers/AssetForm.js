@@ -115,7 +115,8 @@ class AssetForm extends Component {
       arrayUpdates: [],
       isNewData: false,
       isBladeData: false,
-      isChassisData: false
+      isChassisData: false,
+      needsBatch: false
     };
 
 
@@ -137,6 +138,7 @@ class AssetForm extends Component {
             changes.newData[prop] = currentState[prop];
             changes.numberOfFields = changes.numberOfFields + 1;
             changes.isNewData = true;
+            changes.needsBatch = true;
             if ( oldArr.includes(newArr[i]) !== true && newArr[i] !== undefined ) {
               changes.arrayUpdates.push({
                 asset_name: newArr[i],
@@ -176,6 +178,7 @@ class AssetForm extends Component {
           changes.bladeData[prop] = bladeCurrent[prop];
           changes.numberOfFields = changes.numberOfFields + 1;
           changes.isBladeData = true;
+          changes.needsBatch = true;
         }
       }
     }
@@ -190,6 +193,7 @@ class AssetForm extends Component {
           changes.chassisData[prop] = chassisCurrent[prop];
           changes.numberOfFields = changes.numberOfFields + 1;
           changes.isChassisData = true;
+          changes.needsBatch = true;
         }
       }
     }
