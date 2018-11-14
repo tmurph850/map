@@ -72,7 +72,9 @@ const postAssetForm = (req, res) => {
 
     let newArr = oldValues[dbColumn];
     if ( dataObj.added === true ) {
-      newArr.push(dependencyName);
+      if ( newArr.includes(dependencyName) !== true ) {
+        newArr.push(dependencyName);
+      }
     }
     if ( dataObj.removed === true ) {
       let indexOf = newArr.indexOf(dependencyName);
