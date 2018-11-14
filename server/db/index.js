@@ -3,8 +3,8 @@ const { Pool } = require('pg');
 const devHost = 'localhost';
 const prodHost = 'ec2-18-214-185-132.compute-1.amazonaws.com';
 const theDB = 'map';
-const devPassword = 'Rajah2077$$';
-const prodPassword = 'post1';
+const devPassword = '';
+const prodPassword = '';
 
 const pool = new Pool({
   user: 'postgres',
