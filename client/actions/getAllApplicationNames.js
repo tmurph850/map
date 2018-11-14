@@ -9,7 +9,7 @@ export const getAllApplicationNames = () => {
 
   const request = axios({
     method: "get",
-    url: devUrl,
+    url: prodUrl,
     responseType: "json",
   });
 
