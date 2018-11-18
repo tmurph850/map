@@ -22,7 +22,7 @@ const SizedSelectField = (props) => {
   return (
     <div className="sized-group">
       <label className="app-data-label" htmlFor={props.selectID}>{props.labelText}</label>
-      <select className={`${props.dynamicClass}`} id={props.selectID} size={props.selectSize} onClick={(e) => props.openOnClick(e)}>
+      <select className={`${props.dynamicClass}`} id={props.selectID} size={props.selectSize} onClick={props.openOnClick}>
         {listOptions}
       </select>
     </div>

@@ -25,13 +25,13 @@ const ListOptions = (props) => {
 
     if ( props.htmlId ) {
       return (
-        <select className="form-control list-options" id={props.htmlId} onChange={(e) => props.OnClickHandler(e)}>
+        <select className="form-control list-options" id={props.htmlId} onChange={props.OnClickHandler}>
           {listArr}
         </select>
       );
     } else {
       return (
-        <select className="form-control list-options" onChange={(e) => props.OnClickHandler(e)}>
+        <select className="form-control list-options" onChange={props.OnClickHandler}>
           {listArr}
         </select>
       );
@@ -40,14 +40,14 @@ const ListOptions = (props) => {
 
   if ( Array.isArray(props.data) && props.data.length === 0 ) {
     return (
-      <select className="form-control list-options" onChange={(e) => props.OnClickHandler(e)}>
+      <select className="form-control list-options" onChange={props.OnClickHandler}>
         <option value="No Data">No Data</option>
       </select>
     );
   }
 
   return (
-    <select className="form-control list-options" onChange={(e) => props.OnClickHandler(e)}>
+    <select className="form-control list-options" onChange={props.OnClickHandler}>
       <option value="No Data">Something Went Wrong</option>
     </select>
   );

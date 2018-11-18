@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 //const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
-//const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
   entry: './client/index.js',
@@ -10,7 +10,7 @@ const config = {
     filename: 'app.js',
     path: path.resolve(__dirname, 'dist')
   },
-  devtool: 'inline-source-map',
+  //devtool: 'inline-source-map',
   devServer: {
     contentBase: './dist',
     hot: true,
@@ -59,16 +59,16 @@ const config = {
       }
     ]
   },
-  mode: 'development',
+  mode: 'production',
   plugins: [
     new HtmlWebpackPlugin({
       title: 'MAP',
       // Load a custom template (lodash by default see the FAQ for details)
       template: './client/index.html'
     }),
-    /*new UglifyJSPlugin({
+    new UglifyJSPlugin({
       test: /\.js(\?.*)?$/i
-    }),*/
+    }),
     //new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ]

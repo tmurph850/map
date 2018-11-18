@@ -451,7 +451,7 @@ class AssetForm extends Component {
   }
 
   assetOnClick(e) {
-    let assetName = e;
+    let assetName = e.target.value;
     let len = this.props.assetNamesAndTypes.length - 1;
     let assetId;
     if ( this.props.assetNamesAndTypes.length > 0 && this.props.assetNamesAndTypes[len][0].data ) {

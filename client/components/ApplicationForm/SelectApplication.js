@@ -14,7 +14,7 @@ const SelectApplication = (props) => {
     <div className="row">
       <div className="col-lg-6 col-md-6 col-xs-12 select-app-col">
         <div className="form-group select-application-group">
-          <select size="10" className="form-control select-application" id={selectFieldId} onChange={(e) => props.appOnClick(e.target.selectedOptions[0].innerText)}>
+          <select className="form-control select-application" id={selectFieldId} onChange={props.appOnClick}>
             <option value="">{props.placeHolder}</option>
             {arr}
           </select>
