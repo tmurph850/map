@@ -268,7 +268,7 @@ class NewForm extends Component {
 
   selectFormType(e) {
     let formType = e.target.value;
-    if ( formType !== "Please Select A Form Type" ) {
+    if ( formType !== "Select A Form Type" ) {
       this.setState({
         formType: e.target.value,
         formTypeSelected: true
@@ -360,7 +360,7 @@ class NewForm extends Component {
             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 select-form-type">
               <h1>Select a Form Type</h1>
               <select className="form-control select-application" onChange={this.selectFormType}>
-                <option value="Please Select A Form Type">Please Select A Form Type</option>
+                <option value="Select A Form Type">Select A Form Type</option>
                 <option value="Application">Application</option>
                 <option value="Asset">Asset</option>
               </select>

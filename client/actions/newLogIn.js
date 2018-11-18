@@ -6,7 +6,7 @@ const prodUrl = 'http://ec2-18-214-185-132.compute-1.amazonaws.com:3000/login';
 export const newLogIn = (email, password) => {
   const request = axios({
     method: "post",
-    url: prodUrl,
+    url: devUrl,
     responseType: "json",
     data: {
       email: email,

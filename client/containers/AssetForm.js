@@ -77,7 +77,13 @@ class AssetForm extends Component {
   }
 
   componentDidMount() {
-    this.props.getData("get_asset_names_types");
+    /*if ( localStorage.assetNames && localStorage.appNames && localStorage.assetTypes && localStorage.assetTypeArray ) {
+      this.setAssetNames("true");
+      this.setAssetTypes("true");
+      this.setAppNames("true");
+    }*/ //else {
+      this.props.getData("get_asset_names_types");
+    //}
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -86,9 +92,9 @@ class AssetForm extends Component {
     }
 
     if ( prevProps.assetNamesAndTypes.length !== this.props.assetNamesAndTypes.length ) {
-      this.setAssetNames();
-      this.setAssetTypes();
-      this.setAppNames();
+      this.setAssetNames("false");
+      this.setAssetTypes("false");
+      this.setAppNames("false");
     }
 
     if ( prevProps.assetData.length !== this.props.assetData.length ) {
@@ -201,27 +207,48 @@ class AssetForm extends Component {
     return changes;
   }
 
-  setAssetNames() {
-    let allAssetNamesAndTypesLength = this.props.assetNamesAndTypes.length;
-    let currentIndex = allAssetNamesAndTypesLength - 1;
-    let assetNamesWithType = this.props.assetNamesAndTypes[currentIndex][0].data;
-    let assetNames = assetNamesWithType.map(asset => {
-      return asset.asset_name;
-    });
+  setAssetNames(isCached) {
+    let assetNames;
+    //if ( isCached === "false" ) {
+      let allAssetNamesAndTypesLength = this.props.assetNamesAndTypes.length;
+      let currentIndex = allAssetNamesAndTypesLength - 1;
+      let assetNamesWithType = this.props.assetNamesAndTypes[currentIndex][0].data;
+      assetNames = assetNamesWithType.map(asset => {
+        return asset.asset_name;
+      });
+      let strArr = JSON.stringify(assetNames);
+      localStorage.setItem("assetNames", strArr);
+      let aNamesAndTypes = JSON.stringify(assetNamesWithType);
+      localStorage.setItem("assetNamesWithType", aNamesAndTypes);
+    //} else {
+    //  assetNames = JSON.parse(localStorage.assetNames);
+   // }
     this.setState({
-      assetNamesWithType,
+      //assetNamesWithType,
       assetNames
     });
   }
 
-  setAssetTypes() {
-    let assetTypes = this.props.assetNamesAndTypes[0][1].data;
-    let assetKeys = Object.keys(assetTypes);
-    let assetTypeArray = [0];
-    assetKeys.forEach(key => {
-      assetTypeArray.push(assetTypes[key]);
-    });
+  setAssetTypes(isCached) {
+    let assetTypes;
+    let assetTypeArray;
 
+    //if ( isCached === "false" ) {
+      assetTypes = this.props.assetNamesAndTypes[0][1].data;
+      let assetKeys = Object.keys(assetTypes);
+      assetTypeArray = [0];
+      assetKeys.forEach(key => {
+        assetTypeArray.push(assetTypes[key]);
+      });
+      let strArr = JSON.stringify(assetTypes);
+      let typeArr = JSON.stringify(assetTypeArray);
+      localStorage.setItem("assetTypeArray", typeArr);
+      localStorage.setItem("assetTypes", strArr);
+    //} else {
+      assetTypes = JSON.parse(localStorage.assetTypes);
+      assetTypeArray = JSON.parse(localStorage.assetTypeArray);
+    //}
+    
     this.setState({
       assetTypes,
       assetTypeArray
@@ -246,12 +273,21 @@ class AssetForm extends Component {
     });
   }
 
-  setAppNames() {
-    let allAssetNamesAndTypesLength = this.props.assetNamesAndTypes.length;
-    let currentIndex = allAssetNamesAndTypesLength - 1;
-    this.setState({
-      appNames: this.props.assetNamesAndTypes[currentIndex][2].data
-    });
+  setAppNames(isCached) {
+    //if ( isCached === "false" ) {
+      let allAssetNamesAndTypesLength = this.props.assetNamesAndTypes.length;
+      let currentIndex = allAssetNamesAndTypesLength - 1;
+      let strArr = JSON.stringify(this.props.assetNamesAndTypes[currentIndex][2].data);
+      localStorage.setItem("appNames", strArr);
+      this.setState({
+        appNames: this.props.assetNamesAndTypes[currentIndex][2].data
+      });
+    /*} else {
+      let appNames = JSON.parse(localStorage.appNames);
+      this.setState({
+        appNames
+      });
+    }*/
   }
 
   relateAssetTypes() {
@@ -415,14 +451,24 @@ class AssetForm extends Component {
   }
 
   assetOnClick(e) {
-    let assetName = e.target.selectedOptions[0].innerText;
+    let assetName = e;
     let len = this.props.assetNamesAndTypes.length - 1;
     let assetId;
-    this.props.assetNamesAndTypes[len][0].data.some((asset) => {
-      if ( assetName === asset.asset_name ) {
-        assetId = asset.asset_id;
-      }
-    });
+    if ( this.props.assetNamesAndTypes.length > 0 && this.props.assetNamesAndTypes[len][0].data ) {
+      this.props.assetNamesAndTypes[len][0].data.some((asset) => {
+        if ( assetName === asset.asset_name ) {
+          assetId = asset.asset_id;
+        }
+      });
+    } else {
+      let cachedData = JSON.parse(localStorage.assetNamesWithType);
+      cachedData.some(asset => {
+        if ( assetName === asset.asset_name ) {
+          assetId = asset.asset_id;
+        }
+      });
+    }
+    
     if ( assetName !== "Select an Asset" ) {
       this.props.postData(assetId, "get_asset_data");
     } else {
@@ -1175,7 +1221,7 @@ class AssetForm extends Component {
               </div>
   
             </div>
-  
+          
             <div className="row third-row">
   
               <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
@@ -1186,6 +1232,41 @@ class AssetForm extends Component {
                     <ListOptions
                       defaultSelected={this.setDMZValue()}
                       data={["Yes", "No"]}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_status">Status:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="asset_status"
+                      value={this.state.currentAsset.asset_status}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              
+  
+            </div>
+
+            <div className="row fourth-row">
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_owner">IT Owner:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="asset_owner"
+                      value={this.state.currentAsset.asset_owner}
+                      onChange={this.dynamicOnChange}
                     />
                   </div>
                 </div>
@@ -1205,9 +1286,8 @@ class AssetForm extends Component {
                   <i className="fas fa-minus" id="storage_dependencies_i" onClick={this.removeDependency}/>
                 </div>
               </div>
-  
             </div>
-  
+            
             <div className="row fourth-row">
   
              <div className="col-lg-6 col-md-6 col-xs-12">
@@ -1860,6 +1940,41 @@ class AssetForm extends Component {
                 </div>
   
               </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_status">Status:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="asset_status"
+                      value={this.state.currentAsset.asset_status}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              
+  
+            </div>
+
+            <div className="row fourth-row">
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_owner">IT Owner:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="asset_owner"
+                      value={this.state.currentAsset.asset_owner}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
               <div className="col-lg-6 col-md-6 col-xs-12">
                 <SizedSelectField
                   dynamicClass="sized-select"
@@ -1874,7 +1989,6 @@ class AssetForm extends Component {
                   <i className="fas fa-minus" id="storage_dependencies_i" onClick={this.removeDependency}/>
                 </div>
               </div>
-  
             </div>
   
             <div className="row fourth-row">
@@ -2579,6 +2693,41 @@ class AssetForm extends Component {
                 </div>
   
               </div>
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_status">Status:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="asset_status"
+                      value={this.state.currentAsset.asset_status}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
+              
+  
+            </div>
+
+            <div className="row fourth-row">
+              <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
+  
+                <div className="form-group">
+                  <label className="app-data-label" htmlFor="asset_owner">IT Owner:</label>
+                  <div>
+                    <input
+                      className="form-control inputdefault"
+                      id="asset_owner"
+                      value={this.state.currentAsset.asset_owner}
+                      onChange={this.dynamicOnChange}
+                    />
+                  </div>
+                </div>
+  
+              </div>
               <div className="col-lg-6 col-md-6 col-xs-12">
                 <SizedSelectField
                   dynamicClass="sized-select"
@@ -2593,7 +2742,6 @@ class AssetForm extends Component {
                   <i className="fas fa-minus" id="storage_dependencies_i" onClick={this.removeDependency}/>
                 </div>
               </div>
-  
             </div>
   
             <div className="row fourth-row">

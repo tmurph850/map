@@ -3,18 +3,20 @@ import PropTypes from 'prop-types';
 import uuidv1 from 'uuid';
 
 const SelectApplication = (props) => {
-
-  const listOptions = props.appNames.map((app) => 
-    <option value={app} key={app + uuidv1()}>{app}</option>
-  );
+  let arr = [];
+  let selectFieldId = uuidv1();
+  props.appNames.forEach((app) => {
+    let uuidStr = uuidv1();
+    arr.push(<option value={app} id={uuidStr} key={uuidStr}>{app}</option>);
+  });
 
   return (
     <div className="row">
       <div className="col-lg-6 col-md-6 col-xs-12 select-app-col">
         <div className="form-group select-application-group">
-          <select className="form-control select-application" onChange={(e) => props.appOnClick(e)}>
+          <select size="10" className="form-control select-application" id={selectFieldId} onChange={(e) => props.appOnClick(e.target.selectedOptions[0].innerText)}>
             <option value="">{props.placeHolder}</option>
-            {listOptions}
+            {arr}
           </select>
         </div>
       </div>
