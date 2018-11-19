@@ -46,45 +46,66 @@ const postAssetForm = (req, res) => {
   const buildArrayQuery = (dataObj, oldValues) => {
     columns = '';
     text = '';
-    values = [dataObj.asset_name];
-    let depType = dependencyTypes[dataObj.dependencyType];
-    let dependencyName = dataObj.dependencyName;
-    let dbColumn = '';
-    console.log(oldValues);
+    var dependencyName = dataObj.dependencyName;
+    var dbColumn = '';
 
-    switch (depType) {
-      case 'server':
-      case 'blade_server':
-        dbColumn = 'server_dependencies';
-        break;
-      case 'storage_array':
-        dbColumn = 'storage_dependencies';
-        break;
-      case 'esx_host':
-        dbColumn = 'network_dependencies';
-        break;
-      case 'firewall':
-        dbColumn = 'firewall';
-        break;
-      default:
-        dbColumn = 'storage_dependencies';
+    if ( dataObj.application_name ) {
+      values = [dataObj.application_name];
+      dbColumn = "asset_list";
+    } else {
+      values = [dataObj.asset_name];
+      let depType = dependencyTypes[dataObj.dependencyType];
+      console.log(oldValues);
+
+      switch (depType) {
+        case 'server':
+        case 'blade_server':
+          dbColumn = 'server_dependencies';
+          break;
+        case 'storage_array':
+          dbColumn = 'storage_dependencies';
+          break;
+        case 'esx_host':
+          dbColumn = 'network_dependencies';
+          break;
+        case 'firewall':
+          dbColumn = 'firewall';
+          break;
+        default:
+          dbColumn = 'storage_dependencies';
+      }
     }
 
-    let newArr = oldValues[dbColumn];
+    let newArr;
+
+    if ( Array.isArray(oldValues[dbColumn]) ) {
+      newArr = oldValues[dbColumn];
+    }
+
+    if ( oldValues[dbColumn] === null || oldValues[dbColumn] === undefined ) {
+      newArr = [];
+    }
+
     if ( dataObj.added === true ) {
       if ( newArr.includes(dependencyName) !== true ) {
         newArr.push(dependencyName);
       }
     }
+
     if ( dataObj.removed === true ) {
       let indexOf = newArr.indexOf(dependencyName);
       newArr.splice(indexOf, 1);
     }
+
     let newVal = '{' + newArr.toString() + '}';
 
     values.push(newVal);
+    if ( dataObj.application_name ) {
+      text = 'UPDATE application_table SET ' + dbColumn + ' = $2 WHERE application_name = $1';
+    } else {
+      text = 'UPDATE asset_table SET ' + dbColumn + ' = $2 WHERE asset_name = $1';
+    }
     
-    text = 'UPDATE asset_table SET ' + dbColumn + ' = $2 WHERE asset_name = $1';
   };
 
   const buildQuery = (dataObj) => {
@@ -127,30 +148,40 @@ const postAssetForm = (req, res) => {
   };
 
   const getOldVal = (updateObj) => {
-    let depType = dependencyTypes[updateObj.dependencyType];
-    let oldVals = [updateObj.asset_name];
-    let dbColumn = '';
+    let oldText;
+    let oldVals;
+    if ( updateObj.application_name ) {
+      let dbColumn = 'asset_list';
+      oldVals = [updateObj.application_name];
+      oldText = 'SELECT ' + dbColumn + ' FROM application_table WHERE application_name = $1';
 
-    switch (depType) {
-      case 'server':
-      case 'blade_server':
-        dbColumn = 'server_dependencies';
-        break;
-      case 'storage_array':
-        dbColumn = 'storage_dependencies';
-        break;
-      case 'esx_host':
-        dbColumn = 'network_dependencies';
-        break;
-      case 'firewall':
-        dbColumn = 'firewall';
-        break;
-      default:
-        dbColumn = 'storage_dependencies';
-        break;
+    } else {
+      let depType = dependencyTypes[updateObj.dependencyType];
+      oldVals = [updateObj.asset_name];
+      let dbColumn = '';
+
+      switch (depType) {
+        case 'server':
+        case 'blade_server':
+          dbColumn = 'server_dependencies';
+          break;
+        case 'storage_array':
+          dbColumn = 'storage_dependencies';
+          break;
+        case 'esx_host':
+          dbColumn = 'network_dependencies';
+          break;
+        case 'firewall':
+          dbColumn = 'firewall';
+          break;
+        default:
+          dbColumn = 'storage_dependencies';
+          break;
+      }
+
+      oldText = 'SELECT ' + dbColumn + ' FROM asset_table WHERE asset_name = $1';
     }
-
-    let oldText = 'SELECT ' + dbColumn + ' FROM asset_table WHERE asset_name = $1';
+    
     return query(oldText, oldVals);
   };
 
@@ -193,6 +224,7 @@ const postAssetForm = (req, res) => {
     let arr = [];
     let i = 0;
     let obj = {};
+
     arrayUpdates.forEach(update => {
       let oldVals;
       getOldVal(update).then(response => {

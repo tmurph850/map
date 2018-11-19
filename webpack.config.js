@@ -1,8 +1,7 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-//const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+//const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
   entry: './client/index.js',
@@ -10,7 +9,7 @@ const config = {
     filename: 'app.js',
     path: path.resolve(__dirname, 'dist')
   },
-  //devtool: 'inline-source-map',
+  devtool: 'inline-source-map',
   devServer: {
     contentBase: './dist',
     hot: true,
@@ -59,17 +58,39 @@ const config = {
       }
     ]
   },
-  mode: 'production',
+  optimization: {
+    splitChunks: {
+      chunks: 'async',
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
+    }
+  },
+  mode: 'development',
   plugins: [
     new HtmlWebpackPlugin({
       title: 'MAP',
       // Load a custom template (lodash by default see the FAQ for details)
       template: './client/index.html'
     }),
-    new UglifyJSPlugin({
+    /*new UglifyJSPlugin({
       test: /\.js(\?.*)?$/i
-    }),
-    //new webpack.NamedModulesPlugin(),
+    }),*/
     new webpack.HotModuleReplacementPlugin()
   ]
 };

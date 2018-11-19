@@ -101,6 +101,19 @@ class AssetForm extends Component {
       this.setCurrentAsset();
       //this.setOriginalState();
     }
+
+    if ( prevProps.assetFormResponse.length !== this.props.assetFormResponse.length ) {
+      let len = this.props.assetFormResponse.length - 1;
+      let formResponse = this.props.assetFormResponse[len];
+      if ( formResponse.requestNumber === this.state.requestNumber ) {
+        if ( formResponse.success === true ) {
+          alert("Form data submitted successfully!");
+        } else {
+          alert("There was an error submitting the form.");
+        }
+      }
+    }
+
   }
 
   openOnClick(e) {
@@ -145,23 +158,45 @@ class AssetForm extends Component {
             changes.numberOfFields = changes.numberOfFields + 1;
             changes.isNewData = true;
             changes.needsBatch = true;
-            if ( oldArr.includes(newArr[i]) !== true && newArr[i] !== undefined ) {
-              changes.arrayUpdates.push({
-                asset_name: newArr[i],
-                dependencyType: this.state.currentAsset.asset_type,
-                dependencyName: this.state.currentAsset.asset_name,
-                added: true,
-                removed: false
-              });
-            }
-            if ( newArr.includes(oldArr[i]) !== true && oldArr[i] !== undefined ) {
-              changes.arrayUpdates.push({
-                asset_name: oldArr[i],
-                dependencyType: this.state.currentAsset.asset_type,
-                dependencyName: this.state.currentAsset.asset_name,
-                added: false,
-                removed: true
-              });
+            if ( prop === "applications" ) {
+              if ( oldArr.includes(newArr[i]) !== true && newArr[i] !== undefined ) {
+                changes.arrayUpdates.push({
+                  application_name: newArr[i],
+                  dependencyType: this.state.currentAsset.asset_type,
+                  dependencyName: this.state.currentAsset.asset_name,
+                  added: true,
+                  removed: false
+                });
+              }
+              if ( newArr.includes(oldArr[i]) !== true && oldArr[i] !== undefined ) {
+                changes.arrayUpdates.push({
+                  application_name: oldArr[i],
+                  dependencyType: this.state.currentAsset.asset_type,
+                  dependencyName: this.state.currentAsset.asset_name,
+                  added: false,
+                  removed: true
+                });
+              }
+
+            } else {
+              if ( oldArr.includes(newArr[i]) !== true && newArr[i] !== undefined ) {
+                changes.arrayUpdates.push({
+                  asset_name: newArr[i],
+                  dependencyType: this.state.currentAsset.asset_type,
+                  dependencyName: this.state.currentAsset.asset_name,
+                  added: true,
+                  removed: false
+                });
+              }
+              if ( newArr.includes(oldArr[i]) !== true && oldArr[i] !== undefined ) {
+                changes.arrayUpdates.push({
+                  asset_name: oldArr[i],
+                  dependencyType: this.state.currentAsset.asset_type,
+                  dependencyName: this.state.currentAsset.asset_name,
+                  added: false,
+                  removed: true
+                });
+              }
             }
           }
         }
@@ -291,7 +326,8 @@ class AssetForm extends Component {
   }
 
   relateAssetTypes() {
-    let allAssets = this.state.assetNamesWithType;
+    let len = this.props.assetNamesAndTypes.length - 1;
+    let allAssets = this.props.assetNamesAndTypes[len][0].data;
     let servers = [],
     appliances = [],
     storageArrays = [],
