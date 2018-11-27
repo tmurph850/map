@@ -837,11 +837,10 @@ class AssetForm extends Component {
             <header>
               <h1 className="form-header">Asset Data Form</h1>
             </header>
-  
             <SelectApplication
               appNames={this.state.assetNames}
               appOnClick={this.assetOnClick}
-              placeHolder="Select an Asset"
+              selectedValue={this.state.currentAsset.asset_name}
             />
   
             <div className="row first-row">
@@ -1541,7 +1540,7 @@ class AssetForm extends Component {
             <SelectApplication
               appNames={this.state.assetNames}
               appOnClick={this.assetOnClick}
-              placeHolder="Select an Asset"
+              selectedValue={this.state.currentAsset.asset_name}
             />
   
             <div className="row first-row">
@@ -2297,7 +2296,7 @@ class AssetForm extends Component {
             <SelectApplication
               appNames={this.state.assetNames}
               appOnClick={this.assetOnClick}
-              placeHolder="Select an Asset"
+              selectedValue={this.state.currentAsset.asset_name}
             />
   
             <div className="row first-row">

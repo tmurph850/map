@@ -7,7 +7,7 @@ const ListOptions = (props) => {
   if ( Array.isArray(props.data) && props.data.length > 0 ) {
     let listArr = [];
 
-    if ( props.type && props.type === "chassisSlot" && props.defaultSelected === "" ) {
+    if ( props.defaultSelected === "" || props.defaultSelected === undefined || props.defaultSelected === null && props.type && props.type === "chassisSlot" ) {
       listArr.push(<option selected value="Not Assigned" key={uuidv1()}>Not Assigned</option>);
     }
     

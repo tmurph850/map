@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-//const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+//const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
   entry: './client/index.js',
@@ -79,7 +79,8 @@ const config = {
           reuseExistingChunk: true
         }
       }
-    }
+    },
+    //minimizer: [new UglifyJsPlugin()]
   },
   mode: 'development',
   plugins: [
@@ -88,9 +89,6 @@ const config = {
       // Load a custom template (lodash by default see the FAQ for details)
       template: './client/index.html'
     }),
-    /*new UglifyJSPlugin({
-      test: /\.js(\?.*)?$/i
-    }),*/
     new webpack.HotModuleReplacementPlugin()
   ]
 };

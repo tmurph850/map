@@ -220,7 +220,7 @@ class ApplicationForm extends Component {
 
   appOnClick(e) {
     let appName = e.target.selectedOptions[0].innerText;
-    if ( appName !== "Please Select an Application" ) {
+    if ( appName !== "Select an Application" ) {
       this.props.postData(appName, "get_application_data");
     } else {
       this.setState({
@@ -531,7 +531,7 @@ class ApplicationForm extends Component {
             <SelectApplication
               appNames={this.state.appNames}
               appOnClick={this.appOnClick}
-              placeHolder="Please Select an Application"
+              placeHolder="Select an Application"
             />
           </div>
         );
@@ -545,7 +545,7 @@ class ApplicationForm extends Component {
               <SelectApplication
                 appNames={this.state.appNames}
                 appOnClick={this.appOnClick}
-                placeHolder="Please Select an Application"
+                selectedValue={this.state.currentApp.application_name}
               />
   
               <div className="row first-row">

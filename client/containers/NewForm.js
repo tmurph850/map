@@ -1081,6 +1081,23 @@ class NewForm extends Component {
             <h1 className="form-header">New Application Form</h1>
           </header>
           <div className="row first-row">
+            <div className="col-lg-6 col-md-6 col-xs-12 app-id-col" style={{margin: '0 auto'}}>
+
+              <div className="form-group">
+                <label className="app-data-label" htmlFor="application-name">Application Name:</label>
+                <div>
+                  <input
+                    className="form-control inputdefault"
+                    id="application-name"
+                    value={this.state.currentApp.application_name}
+                    onChange={this.dynamicAppOnChange}
+                  />
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div className="row second-row">
 
             <div className="col-lg-6 col-md-6 col-xs-12 app-id-col">
 
