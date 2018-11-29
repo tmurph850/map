@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-//const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
   entry: './client/index.js',
@@ -80,9 +80,9 @@ const config = {
         }
       }
     },
-    //minimizer: [new UglifyJsPlugin()]
+    minimizer: [new UglifyJsPlugin()]
   },
-  mode: 'development',
+  mode: 'production',
   plugins: [
     new HtmlWebpackPlugin({
       title: 'MAP',
