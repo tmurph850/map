@@ -216,7 +216,11 @@ class AssetForm extends Component {
       for (const prop in bladeCurrent) {
         if ( bladeCurrent[prop] !== bladeOriginal[prop] ) {
           changes.bladeData = {};
+          changes.bladeData.previousParent = null;
           changes.bladeData[prop] = bladeCurrent[prop];
+          if ( prop === "chassis" && bladeOriginal[prop] === "" || bladeOriginal[prop] === undefined ) {
+            changes.bladeData.previousParent = this.state.bladeOriginal.parent_asset_id;
+          }
           changes.numberOfFields = changes.numberOfFields + 1;
           changes.isBladeData = true;
           changes.needsBatch = true;
@@ -2154,7 +2158,7 @@ class AssetForm extends Component {
                       className="form-control inputdefault"
                       id="chassis_slot_number"
                       value={this.state.bladeObj.chassis_slot_number}
-                      onChange={this.bladeFieldOnChange}
+                      readOnly
                     />
                   </div>
                 </div>

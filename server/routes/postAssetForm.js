@@ -185,6 +185,16 @@ const postAssetForm = (req, res) => {
     return query(oldText, oldVals);
   };
 
+  const getChassisInfo = (chassisName) => {
+    let values = [chassisName];
+    let text = 'SELECT * FROM asset_table INNER JOIN chassis_table ON (asset_table.asset_id = chassis_table.asset_id) WHERE asset_table.asset_name = $1';
+    return query(text, values);
+  };
+
+  const updateChassisInfo = (chassisId) => {
+
+  };
+
   const queryAll = (arr) => {
     return Promise.all(arr).then(response => {
       res.send({
@@ -238,6 +248,19 @@ const postAssetForm = (req, res) => {
     buildQuery(formData);
     let mainQuery = query(text, values);
     arr.push(mainQuery);
+
+    if ( otherData.isBladeData === true ) {
+      if ( otherData.bladeData.previousParent === 0 || otherData.bladeData.previousParent === null ) {
+
+      }
+      getChassisInfo(otherData.bladeData.chassis).then(response => {
+        // check for first available slot
+      });
+    }
+
+    if ( otherData.isChassisData === true ) {
+
+    }
 
     queryAll(arr).then(response => {
       console.log(response);
