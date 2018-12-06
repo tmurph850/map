@@ -73,10 +73,11 @@ class AssetForm extends Component {
     this.bladeFieldOnChange = this.bladeFieldOnChange.bind(this);
     this.removeDependency = this.removeDependency.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    //this.modelOnChange = this.modelOnChange.bind(this);
     //this.chassisSlotFieldOnChange = this.chassisSlotFieldOnChange.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     /*if ( localStorage.assetNames && localStorage.appNames && localStorage.assetTypes && localStorage.assetTypeArray ) {
       this.setAssetNames("true");
       this.setAssetTypes("true");
@@ -262,10 +263,10 @@ class AssetForm extends Component {
     //} else {
     //  assetNames = JSON.parse(localStorage.assetNames);
    // }
-    this.setState({
+    /*this.setState({
       //assetNamesWithType,
       assetNames
-    });
+    });*/
   }
 
   setAssetTypes(isCached) {
@@ -819,6 +820,21 @@ class AssetForm extends Component {
 
   }
 
+  mapAssetNames() {
+    let assetNames;
+    let allAssetNamesAndTypesLength = this.props.assetNamesAndTypes.length;
+    let currentIndex = allAssetNamesAndTypesLength - 1;
+    if ( allAssetNamesAndTypesLength === 0 ) {
+      return ["Loading"];
+    } else {
+      let assetNamesWithType = this.props.assetNamesAndTypes[currentIndex][0].data;
+      assetNames = assetNamesWithType.map(asset => {
+          return asset.asset_name;
+      });
+      return assetNames;
+    }
+  }
+
   render() {
     if ( this.state.sessionAuth === "true" || this.props.userAuth !== undefined && this.props.userAuth.length > 0 && this.props.userAuth[this.state.userAuthCurrent].isAuthenticated === true ) {
       if ( this.state.assetSelected === false ) {
@@ -828,7 +844,7 @@ class AssetForm extends Component {
               <h1 className="form-header">Asset Data Form</h1>
             </header>
             <SelectApplication
-              appNames={this.state.assetNames}
+              appNames={this.mapAssetNames()}
               appOnClick={this.assetOnClick}
               placeHolder="Select an Asset"
             />
@@ -842,7 +858,7 @@ class AssetForm extends Component {
               <h1 className="form-header">Asset Data Form</h1>
             </header>
             <SelectApplication
-              appNames={this.state.assetNames}
+              appNames={this.mapAssetNames()}
               appOnClick={this.assetOnClick}
               selectedValue={this.state.currentAsset.asset_name}
             />
@@ -1462,7 +1478,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Dependency Name..."
               submitText="Add Dependency"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closestorageDependenciesModalDisplay"
               submitType="storageDependencies"
             />            
@@ -1475,7 +1491,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Dependency Name..."
               submitText="Add Dependency"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closedbAssetDependenciesModalDisplay"
               submitType="dbAssetDependencies"
             />            
@@ -1488,7 +1504,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Dependency Name..."
               submitText="Add Dependency"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closenetworkDependModalDisplay"
               submitType="networkDependencies"
             />            
@@ -1501,7 +1517,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Dependency Name..."
               submitText="Add Dependency"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closefileShareeDependModalDisplay"
               submitType="fileShareDependencies"
             />            
@@ -1514,7 +1530,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Cluster Node Name..."
               submitText="Add Cluster Node"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closeclusterNodesModalDisplay"
               submitType="clusterNodes"
             />            
@@ -1527,7 +1543,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Firewall Name..."
               submitText="Add Firewall"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closefireWallModalDisplay"
               submitType="fireWallDependencies"
             />            
@@ -1542,7 +1558,7 @@ class AssetForm extends Component {
             </header>
   
             <SelectApplication
-              appNames={this.state.assetNames}
+              appNames={this.mapAssetNames()}
               appOnClick={this.assetOnClick}
               selectedValue={this.state.currentAsset.asset_name}
             />
@@ -2218,7 +2234,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Dependency Name..."
               submitText="Add Dependency"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closestorageDependenciesModalDisplay"
               submitType="storageDependencies"
             />            
@@ -2231,7 +2247,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Dependency Name..."
               submitText="Add Dependency"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closedbAssetDependenciesModalDisplay"
               submitType="dbAssetDependencies"
             />            
@@ -2244,7 +2260,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Dependency Name..."
               submitText="Add Dependency"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closenetworkDependModalDisplay"
               submitType="networkDependencies"
             />            
@@ -2257,7 +2273,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Dependency Name..."
               submitText="Add Dependency"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closefileShareeDependModalDisplay"
               submitType="fileShareDependencies"
             />            
@@ -2270,7 +2286,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Cluster Node Name..."
               submitText="Add Cluster Node"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closeclusterNodesModalDisplay"
               submitType="clusterNodes"
             />            
@@ -2283,7 +2299,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Firewall Name..."
               submitText="Add Firewall"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closefireWallModalDisplay"
               submitType="fireWallDependencies"
             />            
@@ -2298,7 +2314,7 @@ class AssetForm extends Component {
             </header>
   
             <SelectApplication
-              appNames={this.state.assetNames}
+              appNames={this.mapAssetNames()}
               appOnClick={this.assetOnClick}
               selectedValue={this.state.currentAsset.asset_name}
             />
@@ -2924,7 +2940,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_1">Slot #1:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_1}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -2939,7 +2955,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_2">Slot #2:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_2}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -2956,7 +2972,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_3">Slot #3:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_3}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -2971,7 +2987,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_4">Slot #4:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_4}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -2988,7 +3004,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_5">Slot #5:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_5}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -3003,7 +3019,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_6">Slot #6:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_6}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -3020,7 +3036,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_7">Slot #7:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_7}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -3035,7 +3051,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_8">Slot #8:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_8}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -3052,7 +3068,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_9">Slot #9:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_9}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -3067,7 +3083,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_10">Slot #10:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_10}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -3084,7 +3100,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_11">Slot #11:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_11}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -3099,7 +3115,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_12">Slot #12:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_12}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -3116,7 +3132,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_13">Slot #13:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_13}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -3131,7 +3147,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_14">Slot #14:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_14}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -3148,7 +3164,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_15">Slot #15:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_15}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -3163,7 +3179,7 @@ class AssetForm extends Component {
                   <label className="app-data-label" htmlFor="slot_16">Slot #16:</label>
                   <div>
                     <ListOptions
-                      data={this.state.assetNames}
+                      data={this.mapAssetNames()}
                       defaultSelected={this.state.chassisObj.slot_16}
                       OnClickHandler={this.chassisFieldOnChange}
                       type="chassisSlot"
@@ -3211,7 +3227,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Dependency Name..."
               submitText="Add Dependency"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closestorageDependenciesModalDisplay"
               submitType="storageDependencies"
             />            
@@ -3224,7 +3240,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Dependency Name..."
               submitText="Add Dependency"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closedbAssetDependenciesModalDisplay"
               submitType="dbAssetDependencies"
             />            
@@ -3237,7 +3253,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Dependency Name..."
               submitText="Add Dependency"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closenetworkDependModalDisplay"
               submitType="networkDependencies"
             />            
@@ -3250,7 +3266,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Dependency Name..."
               submitText="Add Dependency"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closefileShareeDependModalDisplay"
               submitType="fileShareDependencies"
             />            
@@ -3263,7 +3279,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Cluster Node Name..."
               submitText="Add Cluster Node"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closeclusterNodesModalDisplay"
               submitType="clusterNodes"
             />            
@@ -3276,7 +3292,7 @@ class AssetForm extends Component {
               modalSubmit={this.modalSubmit}
               placeHolder="Firewall Name..."
               submitText="Add Firewall"
-              listData={this.state.assetNames}
+              listData={this.mapAssetNames()}
               closeId="closefireWallModalDisplay"
               submitType="fireWallDependencies"
             />            

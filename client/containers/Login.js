@@ -104,7 +104,8 @@ class Login extends Component {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={this.requestLogIn}>
+                  onClick={this.requestLogIn}
+                  onKeyPress={this.requestLogIn}>
                   Next
                 </button>
               </div>

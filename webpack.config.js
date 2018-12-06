@@ -80,7 +80,7 @@ const config = {
         }
       }
     },
-    minimizer: [new UglifyJsPlugin()]
+    //minimizer: [new UglifyJsPlugin()]
   },
   mode: 'production',
   plugins: [
