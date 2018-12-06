@@ -279,6 +279,10 @@ body {
     margin: 0 auto;
     height: 42px;
     max-width: 75%;
+
+    option {
+      width: 500px;
+    }
   }
 
   .select-app-col {

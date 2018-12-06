@@ -904,14 +904,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_name">Asset Name:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_name"
-                      value={this.state.currentAsset.asset_name}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_name"
+                  />
                 </div>
   
               </div>
@@ -936,14 +932,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_make">Asset Make:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_make"
-                      value={this.state.currentAsset.asset_make}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_make"
+                  />
                 </div>
   
               </div>
@@ -965,14 +957,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_environment">Asset Environment:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_environment"
-                      value={this.state.currentAsset.asset_environment}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_environment"
+                  />
                 </div>
   
               </div>
@@ -984,14 +972,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_function">Asset Function:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_function"
-                      value={this.state.currentAsset.asset_function}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_function"
+                  />
                 </div>
   
               </div>
@@ -999,14 +983,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="serial_number">Serial Number:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="serial_number"
-                      value={this.state.currentAsset.serial_number}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="serial_number"
+                  />
                 </div>
   
               </div>
@@ -1032,14 +1012,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="data_center">Data Center:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="data_center"
-                      value={this.state.currentAsset.data_center}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="data_center"
+                  />
                 </div>
   
               </div>
@@ -1052,14 +1028,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="move_group">Move Group:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="move_group"
-                      value={this.state.currentAsset.move_group}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="move_group"
+                  />
                 </div>
   
               </div>
@@ -1067,14 +1039,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="os">OS:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="os"
-                      value={this.state.currentAsset.os}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="os"
+                  />
                 </div>
   
               </div>
@@ -1087,14 +1055,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="cpu">CPU:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="cpu"
-                      value={this.state.currentAsset.cpu}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="cpu"
+                  />
                 </div>
   
               </div>
@@ -1102,14 +1066,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="ram">RAM:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="ram"
-                      value={this.state.currentAsset.ram}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="ram"
+                  />
                 </div>
   
               </div>
@@ -1123,14 +1083,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="disk_size">Disk Size:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="disk_size"
-                      value={this.state.currentAsset.disk_size}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="disk_size"
+                  />
                 </div>
   
               </div>
@@ -1138,14 +1094,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="ip_address">IP Address:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="ip_address"
-                      value={this.state.currentAsset.ip_address}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="ip_address"
+                  />
                 </div>
   
               </div>
@@ -1159,14 +1111,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="all_ips">All IP's:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="all_ips"
-                      value={this.state.currentAsset.all_ips}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="all_ips"
+                  />
                 </div>
   
               </div>
@@ -1174,14 +1122,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="subnet">Subnet:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.currentAsset.subnet}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="subnet"
+                  />
                 </div>
   
               </div>
@@ -1195,14 +1139,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="gateway">Gateway:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="gateway"
-                      value={this.state.currentAsset.gateway}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="gateway"
+                  />
                 </div>
   
               </div>
@@ -1210,14 +1150,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="vlan">VLAN:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="vlan"
-                      value={this.state.currentAsset.vlan}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="vlan"
+                  />
                 </div>
   
               </div>
@@ -1229,15 +1165,11 @@ class AssetForm extends Component {
               <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
   
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="domain">Domain:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="domain"
-                      value={this.state.currentAsset.domain_name}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <label className="app-data-label" htmlFor="domain_name">Domain:</label>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="domain_name"
+                  />
                 </div>
   
               </div>
@@ -1245,14 +1177,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="db_dependency">DB Dependency:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="db_dependency"
-                      value={this.state.currentAsset.db_dependency}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="db_dependency"
+                  />
                 </div>
   
               </div>
@@ -1278,14 +1206,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="vip_requirements">VIP:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="vip_requirements"
-                      value={this.state.currentAsset.vip_requirements}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="vip_requirements"
+                  />
                 </div>
   
               </div>
@@ -1311,14 +1235,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_status">Status:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_status"
-                      value={this.state.currentAsset.asset_status}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_status"
+                  />
                 </div>
   
               </div>
@@ -1331,14 +1251,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_owner">IT Owner:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_owner"
-                      value={this.state.currentAsset.asset_owner}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_owner"
+                  />
                 </div>
   
               </div>
@@ -1600,14 +1516,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_name">Asset Name:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_name"
-                      value={this.state.currentAsset.asset_name}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_name"
+                  />
                 </div>
   
               </div>
@@ -1633,14 +1545,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_make">Asset Make:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_make"
-                      value={this.state.currentAsset.asset_make}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_make"
+                  />
                 </div>
   
               </div>
@@ -1651,14 +1559,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_model">Asset Model:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_model"
-                      value={this.state.currentAsset.asset_model}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_model"
+                  />
                 </div>
   
               </div>
@@ -1666,14 +1570,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_environment">Asset Environment:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_environment"
-                      value={this.state.currentAsset.asset_environment}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_environment"
+                  />
                 </div>
   
               </div>
@@ -1685,14 +1585,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_function">Asset Function:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_function"
-                      value={this.state.currentAsset.asset_function}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_function"
+                  />
                 </div>
   
               </div>
@@ -1700,14 +1596,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="serial_number">Serial Number:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="serial_number"
-                      value={this.state.currentAsset.serial_number}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="serial_number"
+                  />
                 </div>
   
               </div>
@@ -1735,14 +1627,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="data_center">Data Center:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="data_center"
-                      value={this.state.currentAsset.data_center}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="data_center"
+                  />
                 </div>
   
               </div>
@@ -1755,14 +1643,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="move_group">Move Group:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="move_group"
-                      value={this.state.currentAsset.move_group}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="move_group"
+                  />
                 </div>
   
               </div>
@@ -1770,14 +1654,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="os">OS:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="os"
-                      value={this.state.currentAsset.os}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="os"
+                  />
                 </div>
   
               </div>
@@ -1790,14 +1670,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="cpu">CPU:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="cpu"
-                      value={this.state.currentAsset.cpu}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="cpu"
+                  />
                 </div>
   
               </div>
@@ -1805,14 +1681,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="ram">RAM:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="ram"
-                      value={this.state.currentAsset.ram}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="ram"
+                  />
                 </div>
   
               </div>
@@ -1826,14 +1698,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="disk_size">Disk Size:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="disk_size"
-                      value={this.state.currentAsset.disk_size}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="disk_size"
+                  />
                 </div>
   
               </div>
@@ -1841,14 +1709,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="ip_address">IP Address:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="ip_address"
-                      value={this.state.currentAsset.ip_address}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="ip_address"
+                  />
                 </div>
   
               </div>
@@ -1862,14 +1726,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="all_ips">All IP's:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="all_ips"
-                      value={this.state.currentAsset.all_ips}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="all_ips"
+                  />
                 </div>
   
               </div>
@@ -1877,14 +1737,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="subnet">Subnet:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.currentAsset.subnet}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="subnet"
+                  />
                 </div>
   
               </div>
@@ -1898,14 +1754,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="gateway">Gateway:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="gateway"
-                      value={this.state.currentAsset.gateway}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="gateway"
+                  />
                 </div>
   
               </div>
@@ -1913,14 +1765,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="vlan">VLAN:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="vlan"
-                      value={this.state.currentAsset.vlan}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="vlan"
+                  />
                 </div>
   
               </div>
@@ -1932,15 +1780,11 @@ class AssetForm extends Component {
               <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
   
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="domain">Domain:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="domain"
-                      value={this.state.currentAsset.domain_name}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <label className="app-data-label" htmlFor="domain_name">Domain:</label>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="domain_name"
+                  />
                 </div>
   
               </div>
@@ -1948,14 +1792,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="db_dependency">DB Dependency:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="db_dependency"
-                      value={this.state.currentAsset.db_dependency}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="db_dependency"
+                  />
                 </div>
   
               </div>
@@ -1981,14 +1821,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="vip_requirements">VIP:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="vip_requirements"
-                      value={this.state.currentAsset.vip_requirements}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="vip_requirements"
+                  />
                 </div>
   
               </div>
@@ -2014,14 +1850,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_status">Status:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_status"
-                      value={this.state.currentAsset.asset_status}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_status"
+                  />
                 </div>
   
               </div>
@@ -2034,14 +1866,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_owner">IT Owner:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_owner"
-                      value={this.state.currentAsset.asset_owner}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_owner"
+                  />
                 </div>
   
               </div>
@@ -2356,14 +2184,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_name">Asset Name:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_name"
-                      value={this.state.currentAsset.asset_name}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_name"
+                  />
                 </div>
   
               </div>
@@ -2388,14 +2212,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_make">Asset Make:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_make"
-                      value={this.state.currentAsset.asset_make}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_make"
+                  />
                 </div>
   
               </div>
@@ -2406,14 +2226,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_model">Asset Model:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_model"
-                      value={this.state.currentAsset.asset_model}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_model"
+                  />
                 </div>
   
               </div>
@@ -2421,14 +2237,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_environment">Asset Environment:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_environment"
-                      value={this.state.currentAsset.asset_environment}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_environment"
+                  />
                 </div>
   
               </div>
@@ -2440,14 +2252,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_function">Asset Function:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_function"
-                      value={this.state.currentAsset.asset_function}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_function"
+                  />
                 </div>
   
               </div>
@@ -2455,14 +2263,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="serial_number">Serial Number:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="serial_number"
-                      value={this.state.currentAsset.serial_number}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="serial_number"
+                  />
                 </div>
   
               </div>
@@ -2488,14 +2292,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="data_center">Data Center:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="data_center"
-                      value={this.state.currentAsset.data_center}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="data_center"
+                  />
                 </div>
   
               </div>
@@ -2508,14 +2308,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="move_group">Move Group:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="move_group"
-                      value={this.state.currentAsset.move_group}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="move_group"
+                  />
                 </div>
   
               </div>
@@ -2523,14 +2319,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="os">OS:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="os"
-                      value={this.state.currentAsset.os}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="os"
+                  />
                 </div>
   
               </div>
@@ -2543,14 +2335,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="cpu">CPU:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="cpu"
-                      value={this.state.currentAsset.cpu}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="cpu"
+                  />
                 </div>
   
               </div>
@@ -2558,14 +2346,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="ram">RAM:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="ram"
-                      value={this.state.currentAsset.ram}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="ram"
+                  />
                 </div>
   
               </div>
@@ -2579,14 +2363,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="disk_size">Disk Size:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="disk_size"
-                      value={this.state.currentAsset.disk_size}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="disk_size"
+                  />
                 </div>
   
               </div>
@@ -2594,14 +2374,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="ip_address">IP Address:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="ip_address"
-                      value={this.state.currentAsset.ip_address}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="ip_address"
+                  />
                 </div>
   
               </div>
@@ -2615,14 +2391,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="all_ips">All IP's:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="all_ips"
-                      value={this.state.currentAsset.all_ips}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="all_ips"
+                  />
                 </div>
   
               </div>
@@ -2630,14 +2402,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="subnet">Subnet:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="subnet"
-                      value={this.state.currentAsset.subnet}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="subnet"
+                  />
                 </div>
   
               </div>
@@ -2651,14 +2419,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="gateway">Gateway:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="gateway"
-                      value={this.state.currentAsset.gateway}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="gateway"
+                  />
                 </div>
   
               </div>
@@ -2666,14 +2430,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="vlan">VLAN:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="vlan"
-                      value={this.state.currentAsset.vlan}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="vlan"
+                  />
                 </div>
   
               </div>
@@ -2685,15 +2445,11 @@ class AssetForm extends Component {
               <div className="col-lg-6 col-md-6 col-xs-12 app-env-col">
   
                 <div className="form-group">
-                  <label className="app-data-label" htmlFor="domain">Domain:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="domain"
-                      value={this.state.currentAsset.domain_name}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <label className="app-data-label" htmlFor="domain_name">Domain:</label>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="domain_name"
+                  />
                 </div>
   
               </div>
@@ -2701,14 +2457,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="db_dependency">DB Dependency:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="db_dependency"
-                      value={this.state.currentAsset.db_dependency}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="db_dependency"
+                  />
                 </div>
   
               </div>
@@ -2734,14 +2486,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="vip_requirements">VIP:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="vip_requirements"
-                      value={this.state.currentAsset.vip_requirements}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="vip_requirements"
+                  />
                 </div>
   
               </div>
@@ -2767,14 +2515,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_status">Status:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_status"
-                      value={this.state.currentAsset.asset_status}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_status"
+                  />
                 </div>
   
               </div>
@@ -2787,14 +2531,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_owner">IT Owner:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_owner"
-                      value={this.state.currentAsset.asset_owner}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_owner"
+                  />
                 </div>
   
               </div>
