@@ -8,10 +8,10 @@ const prodPassword = 'post1';
 
 const pool = new Pool({
   user: 'postgres',
-  host: devHost,
+  host: prodHost,
   port: 5432,
   database: theDB,
-  password: devPassword
+  password: prodPassword
 });
 
 module.exports = {

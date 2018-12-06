@@ -13,6 +13,7 @@ import postAssetFormReducer from './postAssetFormReducer';
 import postAssetOrDepReducer from './postAssetOrDepReducer';
 import getAssetNamesAndTypesReducer from './getAssetNamesAndTypesReducer';
 import handleAuthReducer from './handleAuthReducer';
+import updateAssetReducer from './updateAssetReducer';
 
 const rootReducer = combineReducers({
   signUpResponse: NewSignUpReducer,
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
   assetFormResponse: postAssetFormReducer,
   assetOrDepResponse: postAssetOrDepReducer,
   assetNamesAndTypes: getAssetNamesAndTypesReducer,
-  userAuth: handleAuthReducer
+  userAuth: handleAuthReducer,
+  updatedAsset: updateAssetReducer
 });
 
 export default rootReducer;

@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import SizedSelectField from '../components/ApplicationForm/SizedSelectField';
 import SelectModal from '../components/SelectModal';
 import SelectApplication from '../components/ApplicationForm/SelectApplication';
+import TextInput from './TextInput';
 import { getData } from '../actions/getData';
 import { postData } from '../actions/postData';
 import ListOptions from '../components/ListOptions';
@@ -115,10 +116,28 @@ class AssetForm extends Component {
       }
     }
 
+    if ( prevProps.updatedAsset.length !== this.props.updatedAsset.length ) {
+      this.updateFromStore();
+    }
+
   }
 
   openOnClick(e) {
     let val = e.target.value;
+  }
+
+  updateFromStore() {
+    let assetObj = Object.assign({}, this.state.currentAsset);
+      let len = this.props.updatedAsset.length - 1;
+      let newData = this.props.updatedAsset[len];
+
+      for (const prop in newData) {
+        assetObj[prop] = newData[prop];
+      }
+
+      this.setState({
+        currentAsset: assetObj
+      });
   }
 
   compareState() {
@@ -935,14 +954,10 @@ class AssetForm extends Component {
   
                 <div className="form-group">
                   <label className="app-data-label" htmlFor="asset_model">Asset Model:</label>
-                  <div>
-                    <input
-                      className="form-control inputdefault"
-                      id="asset_model"
-                      value={this.state.currentAsset.asset_model}
-                      onChange={this.dynamicOnChange}
-                    />
-                  </div>
+                  <TextInput
+                    htmlClassName="form-control inputdefault"
+                    htmlID="asset_model"
+                  />
                 </div>
   
               </div>
@@ -3317,7 +3332,8 @@ AssetForm.propTypes = {
   getData: PropTypes.func.isRequired,
   postData: PropTypes.func.isRequired,
   assetData: PropTypes.array,
-  assetNamesAndTypes: PropTypes.array.isRequired
+  assetNamesAndTypes: PropTypes.array.isRequired,
+  updatedAsset: PropTypes.array
 };
 
 const mapStateToProps = (state) => {
@@ -3326,7 +3342,8 @@ const mapStateToProps = (state) => {
     assetData: state.assetData,
     assetNamesAndTypes: state.assetNamesAndTypes,
     userAuth: state.userAuth,
-    assetFormResponse: state.assetFormResponse
+    assetFormResponse: state.assetFormResponse,
+    updatedAsset: state.updatedAsset
   };
 };
   
