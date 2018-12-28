@@ -3,3 +3,4 @@ config.js
 documents
 dist
 server/db/*
+ObserverPattern.js
