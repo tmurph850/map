@@ -7,6 +7,7 @@ import SizedSelectField from '../components/ApplicationForm/SizedSelectField';
 import SelectModal from '../components/SelectModal';
 import SelectApplication from '../components/ApplicationForm/SelectApplication';
 import TextInput from './TextInput';
+import NotesComponent from './Notes';
 import { getData } from '../actions/getData';
 import { postData } from '../actions/postData';
 import ListOptions from '../components/ListOptions';
@@ -1372,14 +1373,9 @@ class AssetForm extends Component {
   
             </div>
   
-            <div className="row fourth-row">
-              <div className="col-lg-8 col-md-8 col-xs-12 app-env-col" style={{margin: '0 auto'}}>
-                <div className="form-group">
-                  <label className="notes-label app-data-label" htmlFor="notes">Notes:</label>
-                  <textarea className="form-control" id="notes" rows="8" defaultValue={this.state.currentAsset.notes}  onChange={this.dynamicOnChange}/>
-                </div>
-              </div>
-            </div>
+            <NotesComponent
+              htmlID="notes"
+            />
   
            
             <div className="row submit-row">
@@ -2040,14 +2036,9 @@ class AssetForm extends Component {
               </div>
             </div>
   
-            <div className="row fourth-row">
-              <div className="col-lg-8 col-md-8 col-xs-12 app-env-col" style={{margin: '0 auto'}}>
-                <div className="form-group">
-                  <label className="notes-label app-data-label" htmlFor="notes">Notes:</label>
-                  <textarea className="form-control" id="notes" rows="8" defaultValue={this.state.currentAsset.notes}  onChange={this.dynamicOnChange}/>
-                </div>
-              </div>
-            </div>
+            <NotesComponent
+              htmlID="notes"
+            />
   
            
             <div className="row submit-row">
@@ -2945,16 +2936,10 @@ class AssetForm extends Component {
               </div>
             </div>
   
-            <div className="row fourth-row">
-              <div className="col-lg-8 col-md-8 col-xs-12 app-env-col" style={{margin: '0 auto'}}>
-                <div className="form-group">
-                  <label className="notes-label app-data-label" htmlFor="notes">Notes:</label>
-                  <textarea className="form-control" id="notes" rows="8" defaultValue={this.state.currentAsset.notes}  onChange={this.dynamicOnChange}/>
-                </div>
-              </div>
-            </div>
-  
-           
+            <NotesComponent
+              htmlID="notes" 
+            />
+     
             <div className="row submit-row">
               <div className="col-lg-3 col-md-3 col-xs-6 submit-container">
                 <button type="button" onClick={this.submitForm} className="submit-button">Submit Form</button>
