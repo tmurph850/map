@@ -238,29 +238,31 @@ const postAssetForm = (req, res) => {
     arrayUpdates.forEach(update => {
       let oldVals;
       getOldVal(update).then(response => {
-      oldVals = response.rows[0];
-      buildArrayQuery(update, oldVals);
-      obj["query" + i] = query(text, values);
-      arr.push(obj["query" + i]);
+        oldVals = response.rows[0];
+        buildArrayQuery(update, oldVals);
+        obj["query" + i] = query(text, values);
+        arr.push(obj["query" + i]);
       });
+      i++;
     });
+
+    if ( otherData.isBladeData === true ) {
+      let newParentName = otherData.bladeData.chassis;
+      let assetId = otherData.assetId;
+
+      let queryText = 'UPDATE blade_table SET chassis = $2 WHERE asset_id = $1';
+      let queryValues = [assetId, newParentName];
+      let bladeQuery = query(queryText, queryValues);
+      arr.push(bladeQuery);
+    }
+
+    /*if ( otherData.isChassisData === true ) {
+      
+    }*/
 
     buildQuery(formData);
     let mainQuery = query(text, values);
     arr.push(mainQuery);
-
-    if ( otherData.isBladeData === true ) {
-      if ( otherData.bladeData.previousParent === 0 || otherData.bladeData.previousParent === null ) {
-
-      }
-      getChassisInfo(otherData.bladeData.chassis).then(response => {
-        // check for first available slot
-      });
-    }
-
-    if ( otherData.isChassisData === true ) {
-
-    }
 
     queryAll(arr).then(response => {
       console.log(response);

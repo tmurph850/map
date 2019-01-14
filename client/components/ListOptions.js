@@ -10,6 +10,10 @@ const ListOptions = (props) => {
     if ( props.defaultSelected === "" || props.defaultSelected === undefined || props.defaultSelected === null && props.type && props.type === "chassisSlot" ) {
       listArr.push(<option selected value="Not Assigned" key={uuidv1()}>Not Assigned</option>);
     }
+
+    if ( props.defaultSelected !== "" && props.defaultSelected !== undefined && props.defaultSelected === null && props.type && props.type === "chassisSlot" ) {
+      listArr.push(<option value="Not Assigned" key={uuidv1()}>Not Assigned</option>);
+    }
     
     props.data.forEach(item => {
       if ( item === props.defaultSelected ) {
